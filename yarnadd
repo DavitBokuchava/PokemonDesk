@@ -1,0 +1,6 @@
+yarn add react react-dom
+yarn add -D css-loader@5.0.0 style-loader@2.0.0 sass-loader@10.0.4
+yarn add -D html-webpack-plugin@4.5.0
+yarn add -D webpack-dev-server@3.11.0
+yarn add -D typescript@4.0.3 ts-loader@8.2.0
+yarn add -D css-loader@5.0.0 style-loader@2.0.0 sass-loader@10.0.4
