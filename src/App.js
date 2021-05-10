@@ -1,20 +1,21 @@
 import React from 'react';
-import s from './App.css'
+import cn from 'classnames'
+import s from './App.modules.scss'
 import st from './style.module.css'
  import "./index.css"
 const App = ()=>{
     console.log(process.env.NODE_ENV, "st.text")
-    console.log(s.appcss, "s text")
+    console.log(st.cssmodule,s.appscss, "s text")
     return (
         <>
-            <div className = {st.texttwo}>
+            <div className = {cn(s.appscss)}>
                 Hi All
                 
             </div>
-            <div className = "indexcss">
+            <div className = "indexstyle">
             CSS
             </div>
-            <div className = {s.appcss}>
+            <div className = {st.cssmodule}>
             CSS MODULE
             </div>
         </>    
