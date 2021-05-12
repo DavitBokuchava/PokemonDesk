@@ -4,3 +4,27 @@ yarn add -D html-webpack-plugin@4.5.0
 yarn add -D webpack-dev-server@3.11.0
 yarn add -D typescript@4.0.3 ts-loader@8.2.0
 yarn add -D css-loader@5.0.0 style-loader@2.0.0 sass-loader@10.0.4
+
+.prettierrc
+{
+  "printWidth": 120,
+  "tabWidth": 2,
+  "useTabs": false,
+  "semi": true,
+  "singleQuote": true,
+  "trailingComma": "all",
+  "bracketSpacing": true,
+  "jsxBracketSameLine": true,
+  "fluid": false,
+  "arrowParens": "always"
+}
+yarn add -D eslint@7.12.1 eslint-config-airbnb@18.2.0 eslint-config-react-app@6.0.0 eslint-import-resolver-webpack@0.13.0 eslint-plugin-flowtype@5.2.0 eslint-plugin-import@2.22.1 eslint-plugin-jsx-a11y@6.4.1 eslint-plugin-react@7.21.5 eslint-plugin-react-hooks@4.2.0 @typescript-eslint/eslint-plugin@4.6.0 @typescript-eslint/parser@4.6.0
+yarn add -D prettier@2.1.2 pretty-quick@3.1.0 eslint-config-prettier@6.15.0 eslint-plugin-prettier@3.1.4
+yarn add -D husky@4.3.0 lint-staged@10.5.1
+
+yarn add -D @types/react @types/react-dom
+yarn add -D @types/classnames
+yarn add -D css-modules-typescript-loader  
+
+yarn add -D typescript-plugin-css-modules
+
