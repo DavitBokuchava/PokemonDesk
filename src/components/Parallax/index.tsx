@@ -1,33 +1,63 @@
-// import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-// import s from './style.module.scss';
+import s from './style.module.scss';
 
-// import SmallPokeBallPng from './assets/PokeBall1.png';
-// import CloudPng from './assets/Cloud1.png';
-// import PokeBallPng from './assets/PokeBall2.png';
-// import CloudBigPng from './assets/Cloud2.png';
-// import PikachuPng from './assets/Pikachu.png';
+import SmallPokeBallPng from './assets/PokeBall1.png';
+import CloudPng from './assets/Cloud1.png';
+import PokeBallPng from './assets/Pokeball2.png';
+import CloudBigPng from './assets/Cloud2.png';
+import PikachuPng from './assets/Pikachu.png';
 
-// const Parallax = () => {
-//     return (
-//         <div className={s.root}>
-//             <div className={s.smallPokeBall}>
-//                 <img src={SmallPokeBallPng} alt="Small PokeBall" />
-//             </div>
-//             <div className={s.cloud}>
-//                 <img src={CloudPng} alt="Cloud PokeBall" />
-//             </div>
-//             <div className={s.cloudBig}>
-//                 <img src={CloudBigPng} alt="Cloud Big PokeBall" />
-//             </div>
-//             <div className={s.pokeBall}>
-//                 <img src={PokeBallPng} alt="Big PokeBall" />
-//             </div>
-//             <div className={s.pikachu}>
-//                 <img src={PikachuPng} alt="Cloud PokeBall" />
-//             </div>
-//         </div>
-//     );
-// };
+const Parallax = () => {
+  const [screenX, setScreenX] = useState(0);
+  const [screenY, setScreenY] = useState(0);
+  useEffect(() => {
+    const movemouse = (event: MouseEvent) => {
+      setScreenX(event.screenX);
+      setScreenY(event.screenY);
+    };
+    window.addEventListener('mousemove', movemouse);
+    return () => window.removeEventListener('mousemove', movemouse);
+  }, [screenX, screenY]);
+  return (
+    <div className={s.root}>
+      <div
+        className={s.smallPokeBall}
+        style={{
+          transform: `translate(${screenX * 0.01}px, ${screenY * 0.01}px)`,
+        }}>
+        <img src={SmallPokeBallPng} alt="Small PokeBall" />
+      </div>
+      <div
+        className={s.cloud}
+        style={{
+          transform: `translate(${screenX * 0.01}px, ${screenY * 0.01}px)`,
+        }}>
+        <img src={CloudPng} alt="Cloud PokeBall" />
+      </div>
+      <div
+        className={s.cloudBig}
+        style={{
+          transform: `translate(${screenX * 0.01}px, ${screenY * 0.01}px)`,
+        }}>
+        <img src={CloudBigPng} alt="Cloud Big PokeBall" />
+      </div>
+      <div
+        className={s.pokeBall}
+        style={{
+          transform: `translate(${screenX * 0.05}px, ${screenY * 0.05}px)`,
+        }}>
+        <img src={PokeBallPng} alt="Big PokeBall" />
+      </div>
+      <div
+        className={s.pikachu}
+        style={{
+          transform: `translate(${screenX * 0.1}px, ${screenY * 0.1}px)`,
+        }}>
+        <img src={PikachuPng} alt="Cloud PokeBall" />
+      </div>
+    </div>
+  );
+};
 
-// export default Parallax;
+export default Parallax;
