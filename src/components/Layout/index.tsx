@@ -2,12 +2,13 @@
 // import cn from 'classnames';
 
 // import st from './style.module.scss';
-// interface LayOutProps{
-//   className:
+// interface LayOutProps {
+//   className: string | null;
 // }
-// //, className = null
-// const Layout: React.FC<LayOutProps> = ({ children }) => (
-//   <div className={cn(st.root )}>{children}</div>
+// const Layout: React.FC <LayOutProps> = ({children, className = null }: LayOutProps) => (
+//   <div className={cn(st.root, className)}>
+//       {children}
+//     </div>
 // );
 
 // export default Layout;
