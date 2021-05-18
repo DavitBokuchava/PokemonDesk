@@ -6,15 +6,17 @@ import Button from '../../components/Button';
 
 const HomePage = () => {
   interface butns {
-    id: number;
-    button: string | null;
-    name?: any;
+    id: string;
+    width?: string;
+    color?: string;
+    backgroundColor?: string;
+    name?: string;
   }
 
   const buttons: butns[] = [
-    { id: 1, button: st.buttonOne, name: 'hi all' },
-    { id: 2, button: st.buttonTwo, name: 'hi all pokemons' },
-    { id: 3, button: st.buttonThree, name: 'hi all pokemons of the world ' },
+    { id: '1', width: '150px', color: 'red', backgroundColor: 'yello', name: 'hi all' },
+    { id: '2', width: '200px', color: 'green', backgroundColor: 'red', name: 'hi all pokemons' },
+    { id: '3', width: '300px', color: 'yello', backgroundColor: 'green', name: 'hi all pokemons of the world ' },
   ];
 
   return (
@@ -28,8 +30,13 @@ const HomePage = () => {
             <h1>HI ALL </h1>
             <h1>HI ALL </h1>
             {buttons.map((el) => (
-              <Button key={el.id} onClick={() => 'Click'} classname={el.button}>
-                {/* See Pokemons */}
+              <Button
+                key={el.id}
+                onClick={() => 'Click'}
+                width={el.width}
+                color={el.color}
+                backgroundColor={el.backgroundColor}>
+                {el.name}
               </Button>
             ))}
           </div>
