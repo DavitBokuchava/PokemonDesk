@@ -1,9 +1,11 @@
 import React from 'react';
+import { navigate } from 'hookrouter';
 import st from './Home.module.scss';
 import Header from '../../components/Header';
 import Parallax from '../../components/Parallax';
 import Button from '../../components/Button';
 import Heading from '../../components/Heading';
+import { LinkEnum } from '../../routes';
 
 /* eslint-disable */
 const HomePage = () => {
@@ -15,12 +17,6 @@ const HomePage = () => {
     name?: string;
   }
 
-  const buttons: butns[] = [
-    { id: '1', width: '150px', color: 'red', backgroundColor: 'yello', name: 'hi all' },
-    { id: '2', width: '200px', color: 'green', backgroundColor: 'inherit', name: 'see pokemons' },
-    { id: '3', width: '300px', color: 'yello', backgroundColor: 'green', name: 'hi all pokemons of the world ' },
-  ];
-
   return (
     <div className={st.root}>
       <Header />
@@ -28,16 +24,14 @@ const HomePage = () => {
         <div className={st.left}>
           <div style={{ display: 'block' }}>
             <Heading size="72px">avoe</Heading>
-            {buttons.map((el) => (
-              <Button
-                key={el.id}
-                onClick={() => 'Click'}
-                width={el.width}
-                color={el.color}
-                backgroundColor={el.backgroundColor}>
-                {el.name}
-              </Button>
-            ))}
+
+            <Button
+              onClick={() => navigate(LinkEnum.POKEDEX, true, null, true)}
+              width="300px"
+              color="white"
+              backgroundColor="blue">
+              SEE POKEMONS
+            </Button>
           </div>
         </div>
         <div className={st.right}>
