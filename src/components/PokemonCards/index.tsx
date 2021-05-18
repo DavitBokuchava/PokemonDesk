@@ -48,12 +48,12 @@ const PokemonCard: React.FC<IPokemon> = ({
         </Heading>
         <div className={s.statWrap}>
           <div className={s.statItem}>
-            <div className={s.statValue}>52</div>
-            Attack
+            <div className={s.statValue}>{stats.hp}</div>
+            {stats.attack}
           </div>
           <div className={s.statItem}>
             <div className={s.statValue}>43</div>
-            Defense
+            {stats.defense}
           </div>
         </div>
         <div className={s.labelWrap}>
@@ -61,10 +61,7 @@ const PokemonCard: React.FC<IPokemon> = ({
         </div>
       </div>
       <div className={s.pictureWrap}>
-        <img
-          src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png"
-          alt="Charmander"
-        />
+        <img src={img} alt={name} />
       </div>
     </div>
   );

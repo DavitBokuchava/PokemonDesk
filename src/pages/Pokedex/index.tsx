@@ -3,30 +3,29 @@ import React from 'react';
 import { pokemons } from '../../pokemons';
 import PokemonCards from '../../components/PokemonCards';
 
-// interface Istats{
-//     hp: number;
-//     attack: number;
-//     defense: number;
-//     special_attack: number;
-//     special_defense: number;
-//     speed: number;
-// }
+interface Istats {
+  hp: number;
+  attack: number;
+  defense: number;
+  special_attack: number;
+  special_defense: number;
+  speed: number;
+}
 
-// interface IPokemon{
-//     name_clean:string;
-//     abilities:string[];
-//     stats:Istats;
-//     types:string[];
-//     img:string;
-//     name:string;
-//     base_experience:number;
-//     height:number;
-//     id:number;
-//     is_default:boolean;
-//     order:number;
-//     weight:number;
-
-// }
+interface IPokemon {
+  name_clean: string;
+  abilities: string[];
+  stats: Istats;
+  types: string[];
+  img: string;
+  name: string;
+  base_experience: number;
+  height: number;
+  id: number;
+  is_default: boolean;
+  order: number;
+  weight: number;
+}
 
 const Pokedex = () => {
   return (
