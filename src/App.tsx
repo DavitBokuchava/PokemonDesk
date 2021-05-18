@@ -1,12 +1,11 @@
 import React from 'react';
-import Home from './pages/Home';
-import './index.css';
-
+import { useRoutes } from 'hookrouter';
+import routes from './routes';
+import HomePage from './pages/EmptyPage';
+/* eslint-disable */
 const App = () => {
-  return (
-    <>
-      <Home />
-    </>
-  );
+  const match = useRoutes(routes);
+  console.log(match);
+  return match || <HomePage />;
 };
 export default App;

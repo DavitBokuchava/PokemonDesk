@@ -5,6 +5,7 @@ import Parallax from '../../components/Parallax';
 import Button from '../../components/Button';
 import Heading from '../../components/Heading';
 
+/* eslint-disable */
 const HomePage = () => {
   interface butns {
     id: string;
