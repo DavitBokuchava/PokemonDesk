@@ -3,6 +3,7 @@ import st from './Home.module.scss';
 import Header from '../../components/Header';
 import Parallax from '../../components/Parallax';
 import Button from '../../components/Button';
+import Heading from '../../components/Heading';
 
 const HomePage = () => {
   interface butns {
@@ -15,7 +16,7 @@ const HomePage = () => {
 
   const buttons: butns[] = [
     { id: '1', width: '150px', color: 'red', backgroundColor: 'yello', name: 'hi all' },
-    { id: '2', width: '200px', color: 'green', backgroundColor: 'red', name: 'hi all pokemons' },
+    { id: '2', width: '200px', color: 'green', backgroundColor: 'inherit', name: 'see pokemons' },
     { id: '3', width: '300px', color: 'yello', backgroundColor: 'green', name: 'hi all pokemons of the world ' },
   ];
 
@@ -25,10 +26,7 @@ const HomePage = () => {
       <div className={st.wrap}>
         <div className={st.left}>
           <div style={{ display: 'block' }}>
-            <h1>HI ALL HI</h1>
-            <h1>HI ALL </h1>
-            <h1>HI ALL </h1>
-            <h1>HI ALL </h1>
+            <Heading size="72px">avoe</Heading>
             {buttons.map((el) => (
               <Button
                 key={el.id}

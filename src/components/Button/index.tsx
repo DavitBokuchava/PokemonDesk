@@ -10,7 +10,7 @@ interface ButtonProps {
   children: any;
 }
 
-const Button: React.FC<ButtonProps> = ({ onClick, width, color, backgroundColor, children }: ButtonProps) => {
+const Button: React.FC<ButtonProps> = ({ onClick, width, color, backgroundColor, children }) => {
   return (
     <button className={cn(st.root)} type="button" onClick={onClick} style={{ width, color, backgroundColor }}>
       {children}
