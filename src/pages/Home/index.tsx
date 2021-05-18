@@ -23,6 +23,9 @@ const HomePage = () => {
       <div className={st.wrap}>
         <div className={st.left}>
           <div style={{ display: 'block' }}>
+            <h1>HI ALL HI</h1>
+            <h1>HI ALL </h1>
+            <h1>HI ALL </h1>
             <h1>HI ALL </h1>
             {buttons.map((el) => (
               <Button key={el.id} onClick={() => 'Click'} classname={el.button}>

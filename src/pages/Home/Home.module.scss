@@ -2,21 +2,26 @@
 
 .root {
   min-height: 100vh;
+  position: relative;
   background: linear-gradient(180deg, $third 0%, $primary 100%);
 }
 .wrap {
   display: flex;
+  width: 100%;
 }
 .left {
   flex: 1;
   position: absolute;
-  left: 5%;
+  left: 10.9%;
+  right: 53.3%;
+  top: 21.58%;
+  bottom: 24.02%;
 }
 .right {
   flex: 1;
   position: absolute;
-
-  left: 395px;
+  left: 37%;
+  top: 15%;
 }
 .buttoncolor {
   color: red;
