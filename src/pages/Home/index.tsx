@@ -8,6 +8,9 @@ import Heading from '../../components/Heading';
 import { LinkEnum } from '../../routes';
 
 /* eslint-disable */
+// interface Ihome{
+//   title?:string
+// }
 const HomePage = () => {
   interface butns {
     id: string;
@@ -23,12 +26,14 @@ const HomePage = () => {
       <div className={st.wrap}>
         <div className={st.left}>
           <div style={{ display: 'block' }}>
-            <Heading size="72px">avoe</Heading>
+            <Heading size="72px" className={st.buttonOne}>
+              Hi Pokemons
+            </Heading>
 
             <Button
               onClick={() => navigate(LinkEnum.POKEDEX, true, null, true)}
               width="300px"
-              color="white"
+              color="red"
               backgroundColor="blue">
               SEE POKEMONS
             </Button>

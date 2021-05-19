@@ -22,7 +22,7 @@ const Header = () => {
         <div className={st.menuWrap}>
           {GENERAL_MENU.map(({ title, link }: IMenu) => (
             <A
-              href="#"
+              href={link}
               key={title}
               className={cn(st.menuLink, {
                 [st.activeLink]: link === path,

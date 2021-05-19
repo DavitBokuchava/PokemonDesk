@@ -40,6 +40,7 @@ const PokemonCard: React.FC<IPokemon> = ({
   order,
   weight,
 }) => {
+  //className={s.titleName}
   return (
     <div className={s.root}>
       <div className={s.infoWrap}>
@@ -49,11 +50,11 @@ const PokemonCard: React.FC<IPokemon> = ({
         <div className={s.statWrap}>
           <div className={s.statItem}>
             <div className={s.statValue}>{stats.hp}</div>
-            {stats.attack}
+            Attack
           </div>
           <div className={s.statItem}>
             <div className={s.statValue}>{stats.special_attack}</div>
-            {stats.defense}
+            Defense
           </div>
         </div>
         <div className={s.labelWrap}>

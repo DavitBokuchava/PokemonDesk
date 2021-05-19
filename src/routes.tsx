@@ -1,6 +1,7 @@
 import React from 'react';
 import HomePage from './pages/Home';
 import EmptyPage from './pages/EmptyPage';
+import Pokedex from './pages/Pokedex';
 /* eslint-disable */
 interface IGENERAL_MENU {
   title: string;
@@ -22,7 +23,7 @@ export const GENERAL_MENU: IGENERAL_MENU[] = [
   {
     title: 'Pokédex',
     link: LinkEnum.POKEDEX,
-    component: () => <EmptyPage title="Pokedex" />,
+    component: () => <Pokedex title="Pokédex" />,
   },
   {
     title: 'Legendaries',
