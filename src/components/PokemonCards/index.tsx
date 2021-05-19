@@ -44,7 +44,7 @@ const PokemonCard: React.FC<IPokemon> = ({
     <div className={s.root}>
       <div className={s.infoWrap}>
         <Heading size="xs" className={s.titleName}>
-          Charmander
+          {nameClean}
         </Heading>
         <div className={s.statWrap}>
           <div className={s.statItem}>
@@ -52,7 +52,7 @@ const PokemonCard: React.FC<IPokemon> = ({
             {stats.attack}
           </div>
           <div className={s.statItem}>
-            <div className={s.statValue}>43</div>
+            <div className={s.statValue}>{stats.special_attack}</div>
             {stats.defense}
           </div>
         </div>
