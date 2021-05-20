@@ -2,8 +2,6 @@ import React from 'react';
 /* eslint-disable */
 import { pokemons } from '../../pokemons';
 import PokemonCards from '../../components/PokemonCards';
-import Header from '../../components/Header';
-
 interface Istats {
   hp: number;
   attack: number;
@@ -33,8 +31,7 @@ interface IPokedex {
 const Pokedex: React.FC<IPokedex> = ({ title }) => {
   console.log(pokemons);
   return (
-    <div>
-      <Header />
+    <>
       <div style={{ textAlign: 'center' }}>{title}</div>
       {pokemons.map(
         ({
@@ -67,7 +64,7 @@ const Pokedex: React.FC<IPokedex> = ({ title }) => {
           />
         ),
       )}
-    </div>
+    </>
   );
 };
 

@@ -2,8 +2,6 @@ import React from 'react';
 import cn from 'classnames';
 /* eslint-disable */
 interface headers {
-  head?: string;
-  size?: string;
   className: IclassName;
 }
 interface IclassName {
@@ -11,6 +9,7 @@ interface IclassName {
   textShadow?: string;
   width?: string;
   color?: string;
+  size?: string;
 }
 /* eslint-disable */
 const Heading: React.FC<headers> = ({ size, className, children }) => {
