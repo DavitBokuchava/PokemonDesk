@@ -1,13 +1,11 @@
 import React from 'react';
-import cn from 'classnames';
-import s from './App.module.scss';
-// import "./index.css"
+import { useRoutes } from 'hookrouter';
+import routes from './routes';
+import PageNotFound from './pages/PageNotFound';
+/* eslint-disable */
 const App = () => {
-  return (
-    <>
-      <div className={cn(s.appscss)}>Hi All</div>
-      <div className="indexstyle">CSS</div>
-    </>
-  );
+  const match = useRoutes(routes);
+  console.log(match);
+  return match || <PageNotFound />;
 };
 export default App;

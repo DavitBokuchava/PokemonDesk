@@ -1,3 +1,4 @@
 node_modules/
 .idea/
 .src/**.d.ts
+pkg/mod/github.com/lib/pq@v1.10.1/certs/postgresql.crt
