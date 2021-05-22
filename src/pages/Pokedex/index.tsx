@@ -50,20 +50,34 @@ const Pokedex: React.FC<IPokedex> = ({ title }) => {
     }
   }, [page, limit]);
   useEffect(() => {
-    fetch(`http://zar.hosthot.ru/api/v1/pokemons?offset=${page}&limit=${limit}`)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data.pokemons);
+    const getPokemons = async () => {
+      try {
+        const response = await fetch(`http://zar.hosthot.ru/api/v1/pokemons?offset=${page}&limit=${limit}`);
+        const data = await response.json();
         setPokemons(data.pokemons);
         setTotal(data.total);
-      })
-      .catch((err) => {
+      } catch (err) {
         setError(true);
         console.log(err);
-      })
-      .finally(() => {
+      } finally {
         setIsloading(false);
-      });
+      }
+    };
+    getPokemons();
+    // fetch(`http://zar.hosthot.ru/api/v1/pokemons?offset=${page}&limit=${limit}`)
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     console.log(data.pokemons);
+    //     setPokemons(data.pokemons);
+    //     setTotal(data.total);
+    //   })
+    //   .catch((err) => {
+    //     setError(true);
+    //     console.log(err);
+    //   })
+    //   .finally(() => {
+    //     setIsloading(false);
+    //   });
   }, [page, limit]);
   console.log(pokemons, 'pokemons');
   if (isloading) {
