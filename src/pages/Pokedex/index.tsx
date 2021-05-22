@@ -38,9 +38,19 @@ const Pokedex: React.FC<IPokedex> = ({ title }) => {
   const [pokemons, setPokemons] = useState([]);
   const [isloading, setIsloading] = useState(true);
   const [error, setError] = useState(false);
+  const [page, setPage] = useState(0);
+  const [limit, setLimit] = useState(10);
 
   useEffect(() => {
-    fetch('http://zar.hosthot.ru/api/v1/pokemons')
+    if (page < 0) {
+      setPage(0);
+    }
+    if (limit < 0) {
+      setLimit(10);
+    }
+  }, [page, limit]);
+  useEffect(() => {
+    fetch(`http://zar.hosthot.ru/api/v1/pokemons?offset=${page}&limit=${limit}`)
       .then((res) => res.json())
       .then((data) => {
         console.log(data.pokemons);
@@ -54,7 +64,7 @@ const Pokedex: React.FC<IPokedex> = ({ title }) => {
       .finally(() => {
         setIsloading(false);
       });
-  }, []);
+  }, [page, limit]);
   console.log(pokemons, 'pokemons');
   if (isloading) {
     return <div>isloading...</div>;
@@ -99,6 +109,12 @@ const Pokedex: React.FC<IPokedex> = ({ title }) => {
           />
         ),
       )}
+      <div>
+        <span>page{`  ${page + 1}`}</span>
+        <span>limit{`  ${limit}`}</span>
+        <button onClick={() => setPage((val) => val + 1)}>next</button>
+        <button onClick={() => setPage((val) => val - 1)}>prev</button>
+      </div>
     </>
   );
 };
