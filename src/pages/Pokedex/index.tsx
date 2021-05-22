@@ -113,6 +113,7 @@ const Pokedex: React.FC<IPokedex> = ({ title }) => {
             weight,
           }: IPokemon) => (
             <PokemonCards
+              key={id}
               nameClean={name_clean}
               abilities={abilities}
               stats={stats}
