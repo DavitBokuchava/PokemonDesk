@@ -33,7 +33,7 @@ interface IPokedex {
 interface IclassName {
   className: JSX.ElementAttributesProperty;
 }
-const Pokedex: React.FC<IPokedex> = ({ title }) => {
+const usePokemons = () => {
   const [total, setTotal] = useState(0);
   const [pokemons, setPokemons] = useState([]);
   const [isloading, setIsloading] = useState(true);
@@ -65,21 +65,21 @@ const Pokedex: React.FC<IPokedex> = ({ title }) => {
       }
     };
     getPokemons();
-    // fetch(`http://zar.hosthot.ru/api/v1/pokemons?offset=${page}&limit=${limit}`)
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     console.log(data.pokemons);
-    //     setPokemons(data.pokemons);
-    //     setTotal(data.total);
-    //   })
-    //   .catch((err) => {
-    //     setError(true);
-    //     console.log(err);
-    //   })
-    //   .finally(() => {
-    //     setIsloading(false);
-    //   });
   }, [page, limit]);
+  return {
+    total,
+    pokemons,
+    isloading,
+    error,
+    page,
+    limit,
+    setLimit,
+    setPage,
+  };
+};
+const Pokedex: React.FC<IPokedex> = ({ title }) => {
+  const { total, pokemons, isloading, error, page, limit, setLimit, setPage } = usePokemons();
+
   console.log(pokemons, 'pokemons');
   if (isloading) {
     return <div>isloading...</div>;
