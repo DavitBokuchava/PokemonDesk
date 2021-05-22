@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 /* eslint-disable */
-import { pokemons } from '../../pokemons';
+//import { pokemons } from '../../pokemons';
 import PokemonCards from '../../components/PokemonCards';
+import Heading from '../../components/Heading';
+import st from './style.module.scss';
 interface Istats {
   hp: number;
   attack: number;
@@ -28,10 +30,43 @@ interface IPokemon {
 interface IPokedex {
   title: string;
 }
+interface IclassName {
+  className: JSX.ElementAttributesProperty;
+}
 const Pokedex: React.FC<IPokedex> = ({ title }) => {
-  console.log(pokemons);
+  const [total, setTotal] = useState(0);
+  const [pokemons, setPokemons] = useState([]);
+  const [isloading, setIsloading] = useState(true);
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    fetch('http://zar.hosthot.ru/api/v1/pokemons')
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data.pokemons);
+        setPokemons(data.pokemons);
+        setTotal(data.total);
+      })
+      .catch((err) => {
+        setError(true);
+        console.log(err);
+      })
+      .finally(() => {
+        setIsloading(false);
+      });
+  }, []);
+  console.log(pokemons, 'pokemons');
+  if (isloading) {
+    return <div>isloading...</div>;
+  }
+  if (error) {
+    return <div>Error</div>;
+  }
   return (
     <>
+      <Heading className={st.title}>
+        {total} <b>Pokemons</b>
+      </Heading>
       <div style={{ textAlign: 'center' }}>{title}</div>
       {pokemons.map(
         ({
