@@ -1,13 +1,36 @@
-export const config = {
+interface Iclient {
+  server: Iserver;
+  endpoint: Iendpoint;
+}
+interface Iserver {
+  protocol: string;
+  host: string;
+}
+interface Iendpoint {
+  getPokemons: Igetpokemons;
+}
+interface Igetpokemons {
+  method: string;
+  uri: Ipath;
+}
+interface Ipath {
+  pathname: string;
+}
+
+interface Iconfig {
+  client: Iclient;
+}
+
+export const config: Iconfig = {
   client: {
     server: {
       protocol: 'http',
       host: 'zar.hosthot.ru',
     },
-    endpont: {
+    endpoint: {
       getPokemons: {
         method: 'GET',
-        url: {
+        uri: {
           pathname: '/api/v1/pokemons',
         },
       },

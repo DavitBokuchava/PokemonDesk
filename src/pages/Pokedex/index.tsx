@@ -5,6 +5,7 @@ import PokemonCards from '../../components/PokemonCards';
 import Heading from '../../components/Heading';
 import st from './style.module.scss';
 import config from '../../config';
+import req from '../../utils/request';
 interface Istats {
   hp: number;
   attack: number;
@@ -53,13 +54,12 @@ const usePokemons = () => {
   useEffect(() => {
     const getPokemons = async () => {
       setIsloading(true);
-      const url = `${config.client.server.protocol}://${config.client.server.host}${config.client.endpont.getPokemons.url.pathname}`;
+      const url = `${config.client.server.protocol}://${config.client.server.host}${config.client.endpoint.getPokemons.uri.pathname}`;
       console.log(url, '  url');
       try {
-        const response = await fetch(`${url}?offset=${page}&limit=${limit}`);
-        const data = await response.json();
-        setPokemons(data.pokemons);
-        setTotal(data.total);
+        const response = await req('getPokemons', page, limit); //fetch(`${url}?offset=${page}&limit=${limit}`).then(res=>res.json()) //
+        setPokemons(response.pokemons);
+        setTotal(response.total);
       } catch (err) {
         setError(true);
         console.log(err);
@@ -128,10 +128,13 @@ const Pokedex: React.FC<IPokedex> = ({ title }) => {
         ),
       )}
       <div>
-        <span>page{`  ${page + 1}`}</span>
-        <span>limit{`  ${limit}`}</span>
-        <button onClick={() => setPage((val) => val + 1)}>next</button>
+        <button onClick={() => setLimit((val) => val - 1)}>limit--</button>
+        <button onClick={() => setLimit((val) => val + 1)}>limit++</button>
+        <span>limit{`  ${limit}  `}</span>
+
         <button onClick={() => setPage((val) => val - 1)}>prev</button>
+        <button onClick={() => setPage((val) => val + 1)}>next</button>
+        <span>page{`  ${page + 1} `}</span>
       </div>
     </>
   );

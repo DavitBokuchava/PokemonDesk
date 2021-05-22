@@ -6,7 +6,7 @@ import Header from './components/Header';
 import req from './utils/request';
 /* eslint-disable */
 const App = () => {
-  req();
+  req().then((data) => console.log(data.pokemons));
   const match = useRoutes(routes);
   console.log(match);
   return match ? (
