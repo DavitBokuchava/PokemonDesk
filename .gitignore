@@ -1,5 +1,5 @@
 node_modules/
 .idea/
 .src/**.d.ts
-.src/**/**.d.ts
+.src/*.d.ts
 pkg/
