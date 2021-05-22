@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import PokemonCards from '../../components/PokemonCards';
 import Heading from '../../components/Heading';
 import st from './style.module.scss';
+import config from '../../config';
 interface Istats {
   hp: number;
   attack: number;
@@ -52,8 +53,10 @@ const usePokemons = () => {
   useEffect(() => {
     const getPokemons = async () => {
       setIsloading(true);
+      const url = `${config.client.server.protocol}://${config.client.server.host}${config.client.endpont.getPokemons.url.pathname}`;
+      console.log(url, '  url');
       try {
-        const response = await fetch(`http://zar.hosthot.ru/api/v1/pokemons?offset=${page}&limit=${limit}`);
+        const response = await fetch(`${url}?offset=${page}&limit=${limit}`);
         const data = await response.json();
         setPokemons(data.pokemons);
         setTotal(data.total);
