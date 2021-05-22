@@ -51,6 +51,7 @@ const Pokedex: React.FC<IPokedex> = ({ title }) => {
   }, [page, limit]);
   useEffect(() => {
     const getPokemons = async () => {
+      setIsloading(true);
       try {
         const response = await fetch(`http://zar.hosthot.ru/api/v1/pokemons?offset=${page}&limit=${limit}`);
         const data = await response.json();
