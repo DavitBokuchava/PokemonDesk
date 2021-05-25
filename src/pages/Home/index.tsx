@@ -1,7 +1,6 @@
 import React from 'react';
 import { navigate } from 'hookrouter';
 import st from './Home.module.scss';
-import Header from '../../components/Header';
 import Parallax from '../../components/Parallax';
 import Button from '../../components/Button';
 import Heading from '../../components/Heading';
@@ -22,7 +21,6 @@ const HomePage = () => {
 
   return (
     <div className={st.root}>
-      <Header />
       <div className={st.wrap}>
         <div className={st.left}>
           <div style={{ display: 'block' }}>

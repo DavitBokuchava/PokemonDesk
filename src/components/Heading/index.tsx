@@ -2,9 +2,8 @@ import React from 'react';
 import cn from 'classnames';
 /* eslint-disable */
 interface headers {
-  head?: string;
-  size?: string;
   className: IclassName;
+  size?: string;
 }
 interface IclassName {
   marginBottom?: string;

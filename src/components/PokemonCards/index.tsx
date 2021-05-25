@@ -49,11 +49,11 @@ const PokemonCard: React.FC<IPokemon> = ({
         </Heading>
         <div className={s.statWrap}>
           <div className={s.statItem}>
-            <div className={s.statValue}>{stats.hp}</div>
+            <div className={s.statValue}>{stats.attack}</div>
             Attack
           </div>
           <div className={s.statItem}>
-            <div className={s.statValue}>{stats.special_attack}</div>
+            <div className={s.statValue}>{stats.defense}</div>
             Defense
           </div>
         </div>
