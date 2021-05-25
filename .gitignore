@@ -1,4 +1,6 @@
 node_modules/
 .idea/
-.src/**.d.ts
+src/components/**/*.d.ts
+src/pages/**/*.d.ts
 pkg/
+.vscode/
