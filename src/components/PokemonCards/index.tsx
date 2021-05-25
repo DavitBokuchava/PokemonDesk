@@ -2,36 +2,22 @@
 import React from 'react';
 import Heading from '../Heading';
 import s from './style.module.scss';
-import { Ipokemons, PokemonsReaquest } from '../../interfaces/pokemons';
+import { PokemonsReaquest } from '../../interfaces/pokemons';
 
-const PokemonCard: React.FC<PokemonsReaquest> = ({
-  nameClean,
-  abilities,
-  stats,
-  types,
-  img,
-  name,
-  baseExperience,
-  height,
-  id,
-  isDefault,
-  order,
-  weight,
-}: PokemonsReaquest) => {
-  //className={s.titleName}
+const PokemonCard: React.FC<PokemonsReaquest> = (pokemon: PokemonsReaquest) => {
   return (
     <div className={s.root}>
       <div className={s.infoWrap}>
         <Heading size="xs" className={s.titleName}>
-          {nameClean}
+          {pokemon['name_clean']}
         </Heading>
         <div className={s.statWrap}>
           <div className={s.statItem}>
-            <div className={s.statValue}>{stats.attack}</div>
+            <div className={s.statValue}>{pokemon.stats.attack}</div>
             Attack
           </div>
           <div className={s.statItem}>
-            <div className={s.statValue}>{stats.defense}</div>
+            <div className={s.statValue}>{pokemon.stats.defense}</div>
             Defense
           </div>
         </div>
@@ -40,7 +26,7 @@ const PokemonCard: React.FC<PokemonsReaquest> = ({
         </div>
       </div>
       <div className={s.pictureWrap}>
-        <img src={img} alt={name} />
+        <img src={pokemon.img} alt={pokemon.name} />
       </div>
     </div>
   );
@@ -71,3 +57,53 @@ export default PokemonCard;
 //   order: number;
 //   weight: number;
 // }
+
+/* eslint-disable */
+// import React from 'react';
+// import Heading from '../Heading';
+// import s from './style.module.scss';
+// import {  PokemonsReaquest } from '../../interfaces/pokemons';
+
+// const PokemonCard: React.FC<PokemonsReaquest> = ({
+//   nameClean,
+//   abilities,
+//   stats,
+//   types,
+//   img,
+//   name,
+//   baseExperience,
+//   height,
+//   id,
+//   isDefault,
+//   order,
+//   weight,
+// }: PokemonsReaquest) => {
+//   //className={s.titleName}
+//   return (
+//     <div className={s.root}>
+//       <div className={s.infoWrap}>
+//         <Heading size="xs" className={s.titleName}>
+//           {nameClean}
+//         </Heading>
+//         <div className={s.statWrap}>
+//           <div className={s.statItem}>
+//             <div className={s.statValue}>{stats.attack}</div>
+//             Attack
+//           </div>
+//           <div className={s.statItem}>
+//             <div className={s.statValue}>{stats.defense}</div>
+//             Defense
+//           </div>
+//         </div>
+//         <div className={s.labelWrap}>
+//           <span className={s.label}>Fire</span>
+//         </div>
+//       </div>
+//       <div className={s.pictureWrap}>
+//         <img src={img} alt={name} />
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default PokemonCard;
