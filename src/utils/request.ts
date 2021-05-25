@@ -4,7 +4,7 @@ import getUrlWithParamsConfig from './getUrlWithParamsConfig';
 async function req(endpoint: string, offset: number, limit: number) {
   const uri = Url.format(getUrlWithParamsConfig(endpoint));
 
-  return await fetch(`${uri}?offset=${offset}&limit=${limit}`).then((res) => res.json());
+  return await fetch(`${uri}?offset=${offset * limit}&limit=${limit}`).then((res) => res.json());
 }
 
 export default req;
