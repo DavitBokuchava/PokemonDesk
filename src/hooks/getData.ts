@@ -3,12 +3,12 @@ import { useState, useEffect } from 'react';
 import config from '../config';
 import req from '../utils/request';
 
-const useData = (endpoint: string) => {
-  const [isloading, setIsloading] = useState(true);
-  const [error, setError] = useState(false);
-  const [page, setPage] = useState(0);
-  const [limit, setLimit] = useState(10);
-  const [data, setData] = useState(null);
+const useData = <T>(endpoint: string) => {
+  const [isloading, setIsloading] = useState<boolean>(true);
+  const [error, setError] = useState<boolean>(false);
+  const [page, setPage] = useState<number>(0);
+  const [limit, setLimit] = useState<number>(10);
+  const [data, setData] = useState<T | null>(null);
 
   useEffect(() => {
     if (page < 0) {
@@ -19,12 +19,12 @@ const useData = (endpoint: string) => {
     }
   }, [page, limit]);
   useEffect(() => {
-    const getData = async () => {
+    const getData = async (): Promise<void> => {
       setIsloading(true);
       const url = `${config.client.server.protocol}://${config.client.server.host}${config.client.endpoint.getPokemons.uri.pathname}`;
       console.log(url, '  url');
       try {
-        const response = await req(endpoint, page, limit); //fetch(`${url}?offset=${page}&limit=${limit}`).then(res=>res.json()) //
+        const response = await req<T>(endpoint, page, limit); //fetch(`${url}?offset=${page}&limit=${limit}`).then(res=>res.json()) //
         console.log(response);
         setData(response);
       } catch (err) {

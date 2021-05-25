@@ -1,32 +1,10 @@
+/* eslint-disable */
 import React from 'react';
 import Heading from '../Heading';
 import s from './style.module.scss';
-/* eslint-disable */
-interface Istats {
-  hp: number;
-  attack: number;
-  defense: number;
-  special_attack: number;
-  special_defense: number;
-  speed: number;
-}
+import { Ipokemons, PokemonsReaquest } from '../../interfaces/pokemons';
 
-interface IPokemon {
-  nameClean: string;
-  abilities: string[];
-  stats: Istats;
-  types: string[];
-  img: string;
-  name: string;
-  baseExperience: number;
-  height: number;
-  id: number;
-  isDefault: boolean;
-  order: number;
-  weight: number;
-}
-
-const PokemonCard: React.FC<IPokemon> = ({
+const PokemonCard: React.FC<PokemonsReaquest> = ({
   nameClean,
   abilities,
   stats,
@@ -39,7 +17,7 @@ const PokemonCard: React.FC<IPokemon> = ({
   isDefault,
   order,
   weight,
-}) => {
+}: PokemonsReaquest) => {
   //className={s.titleName}
   return (
     <div className={s.root}>
@@ -69,3 +47,27 @@ const PokemonCard: React.FC<IPokemon> = ({
 };
 
 export default PokemonCard;
+
+// interface Istats {
+//   hp: number;
+//   attack: number;
+//   defense: number;
+//   special_attack: number;
+//   special_defense: number;
+//   speed: number;
+// }
+
+// interface IPokemon {
+//   nameClean: string;
+//   abilities: string[];
+//   stats: Istats;
+//   types: string[];
+//   img: string;
+//   name: string;
+//   baseExperience: number;
+//   height: number;
+//   id: number;
+//   isDefault: boolean;
+//   order: number;
+//   weight: number;
+// }

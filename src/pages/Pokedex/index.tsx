@@ -4,38 +4,10 @@ import PokemonCards from '../../components/PokemonCards';
 import Heading from '../../components/Heading';
 import st from './style.module.scss';
 import useData from '../../hooks/getData';
-interface Istats {
-  hp: number;
-  attack: number;
-  defense: number;
-  special_attack: number;
-  special_defense: number;
-  speed: number;
-}
+import { Ipokemons, PokemonsReaquest } from '../../interfaces/pokemons';
 
-interface IPokemon {
-  name_clean: string;
-  abilities: string[];
-  stats: Istats;
-  types: string[];
-  img: string;
-  name: string;
-  base_experience: number;
-  height: number;
-  id: number;
-  is_default: boolean;
-  order: number;
-  weight: number;
-}
-interface IPokedex {
-  title: string;
-}
-interface IclassName {
-  className: JSX.ElementAttributesProperty;
-}
-
-const Pokedex: React.FC<IPokedex> = ({ title }) => {
-  const { data, isloading, error, page, limit, setLimit, setPage } = useData('getPokemons');
+const Pokedex: React.FC<Ipokemons> = () => {
+  const { data, isloading, error, page, limit, setLimit, setPage } = useData<Ipokemons>('getPokemons');
 
   console.log(data && data.pokemons, data && data.total, 'pokemons');
   if (isloading) {
@@ -47,42 +19,43 @@ const Pokedex: React.FC<IPokedex> = ({ title }) => {
   return (
     <>
       <Heading className={st.title}>
-        {data.total} <b>Pokemons</b>
+        {!isloading && data && data.total} <b>Pokemons</b>
       </Heading>
-      <div style={{ textAlign: 'center' }}>{title}</div>
       <div>
-        {data.pokemons.map(
-          ({
-            name_clean,
-            abilities,
-            stats,
-            types,
-            img,
-            name,
-            base_experience,
-            height,
-            id,
-            is_default,
-            order,
-            weight,
-          }: IPokemon) => (
-            <PokemonCards
-              key={id}
-              nameClean={name_clean}
-              abilities={abilities}
-              stats={stats}
-              types={types}
-              img={img}
-              name={name}
-              baseExperience={base_experience}
-              height={height}
-              id={id}
-              isDefault={is_default}
-              order={order}
-              weight={weight}
-            />
-          ),
-        )}
+        {!isloading &&
+          data &&
+          data.pokemons.map(
+            ({
+              name_clean,
+              abilities,
+              stats,
+              types,
+              img,
+              name,
+              base_experience,
+              height,
+              id,
+              is_default,
+              order,
+              weight,
+            }: PokemonsReaquest) => (
+              <PokemonCards
+                key={id}
+                nameClean={name_clean}
+                abilities={abilities}
+                stats={stats}
+                types={types}
+                img={img}
+                name={name}
+                baseExperience={base_experience}
+                height={height}
+                id={id}
+                isDefault={is_default}
+                order={order}
+                weight={weight}
+              />
+            ),
+          )}
       </div>
       <div>
         <button onClick={() => setLimit((val: number) => val - 1)}>limit--</button>

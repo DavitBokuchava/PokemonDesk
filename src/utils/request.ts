@@ -1,7 +1,7 @@
 import Url from 'url';
 import getUrlWithParamsConfig from './getUrlWithParamsConfig';
 /* eslint-disable */
-async function req(endpoint: string, offset: number, limit: number) {
+async function req<T>(endpoint: string, offset: number, limit: number): Promise<T> {
   const uri = Url.format(getUrlWithParamsConfig(endpoint));
 
   return await fetch(`${uri}?offset=${offset * limit}&limit=${limit}`).then((res) => res.json());
