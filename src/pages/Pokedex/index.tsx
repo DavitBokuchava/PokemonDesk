@@ -30,34 +30,6 @@ const Pokedex: React.FC<Ipokemons> = () => {
     }));
   };
 
-  React.useEffect(() => {
-    // if (page < 0) {
-    //   setPage(0);
-    //  return  setQuery((val)=>({
-    //     ...val,
-    //     ["offset"]: 0
-    //   }))
-    // }
-    setQuery((val) => ({
-      ...val,
-      ['offset']: page * limit,
-    }));
-  }, [page]);
-  React.useEffect(() => {
-    // if (limit < 0) {
-    //   setLimit(2);
-    //   return setQuery((val)=>({
-    //     ...val,
-    //     limit: 2
-    //   }))
-
-    // }
-    setQuery((val) => ({
-      ...val,
-      limit: limit,
-    }));
-  }, [limit]);
-
   if (isloading) {
     return <div>isloading...</div>;
   }
@@ -86,40 +58,42 @@ const Pokedex: React.FC<Ipokemons> = () => {
           data &&
           data.pokemons.map((pokemon: PokemonsReaquest) => <PokemonCards key={pokemon.id} {...pokemon} />)}
       </div>
-      <div>
-        <button
-          onClick={() => {
-            setLimit((val: number) => (val === 0 ? 0 : val - 5));
-            setQuery((val: Iquery) => ({ ...val, limit: limit === 0 ? 0 : limit - 5 }));
-          }}>
-          limit--
-        </button>
-        <button
-          name="limitUp"
-          onClick={() => {
-            setLimit((val: number) => val + 5);
-            setQuery((val: Iquery) => ({ ...val, limit: limit + 5 }));
-          }}>
-          limit++
-        </button>
-        <span>limit{`  ${limit}  `}</span>
+      {data && data.total > 0 && (
+        <div>
+          <button
+            onClick={() => {
+              setLimit((val: number) => (val === 0 ? 0 : val - 5));
+              setQuery((val: Iquery) => ({ ...val, limit: limit === 0 ? 0 : limit - 5 }));
+            }}>
+            limit--
+          </button>
+          <button
+            name="limitUp"
+            onClick={() => {
+              setLimit((val: number) => val + 5);
+              setQuery((val: Iquery) => ({ ...val, limit: limit + 5 }));
+            }}>
+            limit++
+          </button>
+          <span>limit{`  ${limit}  `}</span>
 
-        <button
-          onClick={() => {
-            setPage((val: number) => (val === 0 ? 0 : val - 1));
-            setQuery((val: Iquery) => ({ ...val, offset: page === 0 ? 0 * limit : (page - 1) * limit }));
-          }}>
-          prev
-        </button>
-        <button
-          onClick={() => {
-            setPage((val: number) => val + 1);
-            setQuery((val: Iquery) => ({ ...val, offset: (page + 1) * limit }));
-          }}>
-          next
-        </button>
-        <span>page{`  ${page + 1} `}</span>
-      </div>
+          <button
+            onClick={() => {
+              setPage((val: number) => (val === 0 ? 0 : val - 1));
+              setQuery((val: Iquery) => ({ ...val, offset: page === 0 ? 0 * limit : (page - 1) * limit }));
+            }}>
+            prev
+          </button>
+          <button
+            onClick={() => {
+              setPage((val: number) => val + 1);
+              setQuery((val: Iquery) => ({ ...val, offset: (page + 1) * limit }));
+            }}>
+            next
+          </button>
+          <span>page{`  ${page + 1} `}</span>
+        </div>
+      )}
     </>
   );
 };
