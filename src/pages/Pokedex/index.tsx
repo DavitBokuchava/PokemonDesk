@@ -1,5 +1,7 @@
 /* eslint-disable */
 import React from 'react';
+import { A } from 'hookrouter';
+import { LinkEnum } from '../../routes';
 import PokemonCards from '../../components/PokemonCards';
 import Heading from '../../components/Heading';
 import st from './style.module.scss';
@@ -8,8 +10,8 @@ import useDebounce from '../../hooks/useDebounce';
 import { Ipokemons, PokemonsReaquest } from '../../interfaces/pokemons';
 interface Iquery {
   name?: string;
-  offset: number;
-  limit: number;
+  offset?: number;
+  limit?: number;
 }
 const Pokedex: React.FC<Ipokemons> = () => {
   const [searchValues, setSearchValues] = React.useState<string>('');
@@ -41,6 +43,7 @@ const Pokedex: React.FC<Ipokemons> = () => {
   if (error) {
     return <div>Error</div>;
   }
+  console.log(LinkEnum.POKEMON);
   return (
     <>
       <Heading className={st.title}>
@@ -61,7 +64,11 @@ const Pokedex: React.FC<Ipokemons> = () => {
       <div>
         {!isloading &&
           data &&
-          data.pokemons.map((pokemon: PokemonsReaquest) => <PokemonCards key={pokemon.id} {...pokemon} />)}
+          data.pokemons.map((pokemon: PokemonsReaquest) => (
+            <A href={`${LinkEnum.POKEDEX}/${pokemon.id}`}>
+              <PokemonCards key={pokemon.id} {...pokemon} />
+            </A>
+          ))}
       </div>
       {data && data.total > 0 && (
         <div>
