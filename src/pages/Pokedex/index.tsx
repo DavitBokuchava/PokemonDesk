@@ -6,26 +6,58 @@ import st from './style.module.scss';
 import useData from '../../hooks/getData';
 import { Ipokemons, PokemonsReaquest } from '../../interfaces/pokemons';
 interface Iquery {
-  name: string;
+  name?: string;
+  offset: number;
+  limit: number;
 }
 const Pokedex: React.FC<Ipokemons> = () => {
   const [searchValues, setSearchValues] = React.useState<string>('');
-  const [query, setQuery] = React.useState<object>({});
-  const { data, isloading, error, page, limit, setLimit, setPage } = useData<Ipokemons>('getPokemons', query, [
-    searchValues,
-  ]);
+  const [page, setPage] = React.useState<number>(0);
+  const [limit, setLimit] = React.useState<number>(5);
+  const [query, setQuery] = React.useState<Iquery>({
+    offset: page * limit,
+    limit: limit,
+  });
+
+  const { data, isloading, error } = useData<Ipokemons>('getPokemons', query, [searchValues, page, limit]);
   const handleSearchValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValues(event.target.value);
-    setQuery((val: object) => ({
+    setQuery((val) => ({
       ...val,
-      [event.target.name]: event.target.value,
+      name: event.target.value,
+      offset: 0,
+      limit: 5,
     }));
   };
 
-  //() => setLimit((val: number) => val - 1)
-  //() => setLimit((val: number) => val + 1)
-  //onClick={() => setPage((val: number) => val - 1)
-  //onClick={() => setPage((val: number) => val + 1)}
+  React.useEffect(() => {
+    // if (page < 0) {
+    //   setPage(0);
+    //  return  setQuery((val)=>({
+    //     ...val,
+    //     ["offset"]: 0
+    //   }))
+    // }
+    setQuery((val) => ({
+      ...val,
+      ['offset']: page * limit,
+    }));
+  }, [page]);
+  React.useEffect(() => {
+    // if (limit < 0) {
+    //   setLimit(2);
+    //   return setQuery((val)=>({
+    //     ...val,
+    //     limit: 2
+    //   }))
+
+    // }
+    setQuery((val) => ({
+      ...val,
+      limit: limit,
+    }));
+  }, [limit]);
+
   if (isloading) {
     return <div>isloading...</div>;
   }
@@ -42,10 +74,9 @@ const Pokedex: React.FC<Ipokemons> = () => {
           style={{
             width: '50%',
             height: '50px',
-            border: 'outline',
           }}
           type="text"
-          name="name"
+          name="searchValues"
           value={searchValues}
           onChange={handleSearchValue}
         />
@@ -56,18 +87,35 @@ const Pokedex: React.FC<Ipokemons> = () => {
           data.pokemons.map((pokemon: PokemonsReaquest) => <PokemonCards key={pokemon.id} {...pokemon} />)}
       </div>
       <div>
-        <button name="limitDown" onClick={() => setLimit((val: number) => val - 1)}>
+        <button
+          onClick={() => {
+            setLimit((val: number) => (val === 0 ? 0 : val - 5));
+            setQuery((val: Iquery) => ({ ...val, limit: limit === 0 ? 0 : limit - 5 }));
+          }}>
           limit--
         </button>
-        <button name="limitUp" onClick={() => setLimit((val: number) => val + 1)}>
+        <button
+          name="limitUp"
+          onClick={() => {
+            setLimit((val: number) => val + 5);
+            setQuery((val: Iquery) => ({ ...val, limit: limit + 5 }));
+          }}>
           limit++
         </button>
         <span>limit{`  ${limit}  `}</span>
 
-        <button name="prevPage" onClick={() => setPage((val: number) => val - 1)}>
+        <button
+          onClick={() => {
+            setPage((val: number) => (val === 0 ? 0 : val - 1));
+            setQuery((val: Iquery) => ({ ...val, offset: page === 0 ? 0 * limit : (page - 1) * limit }));
+          }}>
           prev
         </button>
-        <button name="nextPage" onClick={() => setPage((val: number) => val + 1)}>
+        <button
+          onClick={() => {
+            setPage((val: number) => val + 1);
+            setQuery((val: Iquery) => ({ ...val, offset: (page + 1) * limit }));
+          }}>
           next
         </button>
         <span>page{`  ${page + 1} `}</span>
@@ -154,3 +202,19 @@ export default Pokedex;
 // };
 
 // export default Pokedex;
+//() => setLimit((val: number) => val - 1)
+//() => setLimit((val: number) => val + 1)
+//onClick={() => setPage((val: number) => val - 1)
+//onClick={() => setPage((val: number) => val + 1)}
+// function defineButton<T>(name:string){
+//     switch(name){
+//       case "limitDown":
+//       case "limitUp":
+//         return "limit";
+//       case "prevPage":
+//       case "nextPage":
+//         return "page";
+//       default :
+//         return "name"
+//     }
+// }
