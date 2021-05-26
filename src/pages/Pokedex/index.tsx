@@ -15,8 +15,8 @@ const Pokedex: React.FC<Ipokemons> = () => {
   const [page, setPage] = React.useState<number>(0);
   const [limit, setLimit] = React.useState<number>(5);
   const [query, setQuery] = React.useState<Iquery>({
-    offset: page * limit,
-    limit: limit,
+    offset: 0,
+    limit: 5,
   });
 
   const { data, isloading, error } = useData<Ipokemons>('getPokemons', query, [searchValues, page, limit]);
@@ -28,11 +28,13 @@ const Pokedex: React.FC<Ipokemons> = () => {
       offset: 0,
       limit: 5,
     }));
+    setPage(0);
+    setLimit(5);
   };
 
-  if (isloading) {
-    return <div>isloading...</div>;
-  }
+  // if (isloading) {
+  //   return <div>isloading...</div>;
+  // }
   if (error) {
     return <div>Error</div>;
   }
@@ -62,16 +64,22 @@ const Pokedex: React.FC<Ipokemons> = () => {
         <div>
           <button
             onClick={() => {
-              setLimit((val: number) => (val === 0 ? 0 : val - 5));
-              setQuery((val: Iquery) => ({ ...val, limit: limit === 0 ? 0 : limit - 5 }));
+              setLimit((val: number) => (val === 0 ? val : val - 5));
+              setPage(0);
+              setQuery((val: Iquery) => ({ ...val, limit: limit > 5 ? limit - 5 : limit, offset: 0 }));
             }}>
             limit--
           </button>
           <button
             name="limitUp"
             onClick={() => {
-              setLimit((val: number) => val + 5);
-              setQuery((val: Iquery) => ({ ...val, limit: limit + 5 }));
+              setLimit((val: number) => (query.limit * query.offset <= data.total ? val + 5 : val));
+              setPage(0);
+              setQuery((val: Iquery) => ({
+                ...val,
+                limit: query.limit * query.offset <= data.total ? limit + 5 : limit,
+                offset: 0,
+              }));
             }}>
             limit++
           </button>
@@ -86,8 +94,11 @@ const Pokedex: React.FC<Ipokemons> = () => {
           </button>
           <button
             onClick={() => {
-              setPage((val: number) => val + 1);
-              setQuery((val: Iquery) => ({ ...val, offset: (page + 1) * limit }));
+              setPage((val: number) => ((data.total / query.limit) * query.offset >= 1 ? val : val + 1));
+              setQuery((val: Iquery) => ({
+                ...val,
+                offset: (data.total / query.limit) * query.offset >= 1 ? (page + 1) * limit : page * limit,
+              }));
             }}>
             next
           </button>
