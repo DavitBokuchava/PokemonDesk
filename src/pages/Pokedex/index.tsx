@@ -74,7 +74,7 @@ const Pokedex: React.FC<Ipokemons> = () => {
         <div>
           <button
             onClick={() => {
-              setLimit((val: number) => (val === 0 ? val : val - 5));
+              setLimit((val: number) => (val === 5 ? val : val - 5));
               setPage(0);
               setQuery((val: Iquery) => ({ ...val, limit: limit > 5 ? limit - 5 : limit, offset: 0 }));
             }}>
@@ -83,11 +83,11 @@ const Pokedex: React.FC<Ipokemons> = () => {
           <button
             name="limitUp"
             onClick={() => {
-              setLimit((val: number) => (query.limit * query.offset <= data.total ? val + 5 : val));
+              setLimit((val: number) => (val.limit * (page + 1) > data.total ? val : val + 5));
               setPage(0);
               setQuery((val: Iquery) => ({
                 ...val,
-                limit: query.limit * query.offset <= data.total ? limit + 5 : limit,
+                limit: val.limit * (page + 1) > data.total ? limit : limit + 5,
                 offset: 0,
               }));
             }}>
@@ -104,10 +104,10 @@ const Pokedex: React.FC<Ipokemons> = () => {
           </button>
           <button
             onClick={() => {
-              setPage((val: number) => ((data.total / query.limit) * query.offset >= 1 ? val : val + 1));
+              setPage((val: number) => (data.total < (val + 1) * limit ? val : val + 1));
               setQuery((val: Iquery) => ({
                 ...val,
-                offset: (data.total / query.limit) * query.offset >= 1 ? (page + 1) * limit : page * limit,
+                offset: data.total < (page + 1) * limit ? val.offset : page * limit,
               }));
             }}>
             next
