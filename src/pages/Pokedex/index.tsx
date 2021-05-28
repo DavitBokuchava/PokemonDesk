@@ -8,11 +8,8 @@ import st from './style.module.scss';
 import useData from '../../hooks/getData';
 import useDebounce from '../../hooks/useDebounce';
 import { Ipokemons, PokemonsReaquest } from '../../interfaces/pokemons';
-interface Iquery {
-  name?: string;
-  offset?: number;
-  limit?: number;
-}
+import { Iquery } from '../../utils/getUrlWithParamsConfig';
+
 const Pokedex: React.FC<Ipokemons> = () => {
   const [searchValues, setSearchValues] = React.useState<string>('');
   const debouncedValue = useDebounce(searchValues, 1000);
