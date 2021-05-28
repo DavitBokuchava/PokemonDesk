@@ -19,8 +19,8 @@ const Pokedex: React.FC<Ipokemons> = () => {
   const [page, setPage] = React.useState<number>(0);
   const [limit, setLimit] = React.useState<number>(5);
   const [query, setQuery] = React.useState<Iquery>({
-    offset: 0,
-    limit: 5,
+    offset: limit * page,
+    limit: limit,
   });
 
   const { data, isloading, error } = useData<Ipokemons>('getPokemons', query, [debouncedValue, page, limit]);
@@ -83,11 +83,11 @@ const Pokedex: React.FC<Ipokemons> = () => {
           <button
             name="limitUp"
             onClick={() => {
-              setLimit((val: number) => (val.limit * (page + 1) > data.total ? val : val + 5));
+              setLimit((val: number) => (limit * (page + 1) > data.total ? val : val + 5));
               setPage(0);
               setQuery((val: Iquery) => ({
                 ...val,
-                limit: val.limit * (page + 1) > data.total ? limit : limit + 5,
+                limit: limit * (page + 1) > data.total ? limit : limit + 5,
                 offset: 0,
               }));
             }}>
