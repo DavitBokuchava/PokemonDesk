@@ -24,10 +24,14 @@ interface Iconfig {
   client: Iclient;
 }
 
-function getUrlWithParamsConfig(endpontConfig: string) {
+function getUrlWithParamsConfig(endpontConfig: string, queries: object) {
+  let query: object = {
+    ...queries,
+  };
   const url = {
     ...config.client.server,
     ...config.client.endpoint[endpontConfig].uri,
+    query,
   };
 
   return url;

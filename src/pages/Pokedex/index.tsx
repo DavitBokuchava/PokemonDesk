@@ -1,146 +1,215 @@
-import React, { useEffect, useState } from 'react';
 /* eslint-disable */
-//import { pokemons } from '../../pokemons';
+import React from 'react';
+import { A } from 'hookrouter';
+import { LinkEnum } from '../../routes';
 import PokemonCards from '../../components/PokemonCards';
 import Heading from '../../components/Heading';
 import st from './style.module.scss';
-import config from '../../config';
-import req from '../../utils/request';
-interface Istats {
-  hp: number;
-  attack: number;
-  defense: number;
-  special_attack: number;
-  special_defense: number;
-  speed: number;
+import useData from '../../hooks/getData';
+import useDebounce from '../../hooks/useDebounce';
+import { Ipokemons, PokemonsReaquest } from '../../interfaces/pokemons';
+interface Iquery {
+  name?: string;
+  offset?: number;
+  limit?: number;
 }
+const Pokedex: React.FC<Ipokemons> = () => {
+  const [searchValues, setSearchValues] = React.useState<string>('');
+  const debouncedValue = useDebounce(searchValues, 1000);
+  const [page, setPage] = React.useState<number>(0);
+  const [limit, setLimit] = React.useState<number>(5);
+  const [query, setQuery] = React.useState<Iquery>({
+    offset: limit * page,
+    limit: limit,
+  });
 
-interface IPokemon {
-  name_clean: string;
-  abilities: string[];
-  stats: Istats;
-  types: string[];
-  img: string;
-  name: string;
-  base_experience: number;
-  height: number;
-  id: number;
-  is_default: boolean;
-  order: number;
-  weight: number;
-}
-interface IPokedex {
-  title: string;
-}
-interface IclassName {
-  className: JSX.ElementAttributesProperty;
-}
-const usePokemons = () => {
-  const [total, setTotal] = useState(0);
-  const [pokemons, setPokemons] = useState([]);
-  const [isloading, setIsloading] = useState(true);
-  const [error, setError] = useState(false);
-  const [page, setPage] = useState(0);
-  const [limit, setLimit] = useState(10);
+  const { data, isloading, error } = useData<Ipokemons>('getPokemons', query, [debouncedValue, page, limit]);
 
-  useEffect(() => {
-    if (page < 0) {
-      setPage(0);
-    }
-    if (limit < 0) {
-      setLimit(10);
-    }
-  }, [page, limit]);
-  useEffect(() => {
-    const getPokemons = async () => {
-      setIsloading(true);
-      const url = `${config.client.server.protocol}://${config.client.server.host}${config.client.endpoint.getPokemons.uri.pathname}`;
-      console.log(url, '  url');
-      try {
-        const response = await req('getPokemons', page, limit); //fetch(`${url}?offset=${page}&limit=${limit}`).then(res=>res.json()) //
-        setPokemons(response.pokemons);
-        setTotal(response.total);
-      } catch (err) {
-        setError(true);
-        console.log(err);
-      } finally {
-        setIsloading(false);
-      }
-    };
-    getPokemons();
-  }, [page, limit]);
-  return {
-    total,
-    pokemons,
-    isloading,
-    error,
-    page,
-    limit,
-    setLimit,
-    setPage,
+  const handleSearchValue = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValues(event.target.value);
+    setQuery((val) => ({
+      ...val,
+      name: event.target.value,
+      offset: 0,
+      limit: 5,
+    }));
+    setPage(0);
+    setLimit(5);
   };
-};
-const Pokedex: React.FC<IPokedex> = ({ title }) => {
-  const { total, pokemons, isloading, error, page, limit, setLimit, setPage } = usePokemons();
 
-  console.log(pokemons, 'pokemons');
-  if (isloading) {
-    return <div>isloading...</div>;
-  }
+  // if (isloading) {
+  //   return <div>isloading...</div>;
+  // }
   if (error) {
     return <div>Error</div>;
   }
+  console.log(LinkEnum.POKEMON);
   return (
     <>
       <Heading className={st.title}>
-        {total} <b>Pokemons</b>
+        {!isloading && data && data.total} <b>Pokemons</b>
       </Heading>
-      <div style={{ textAlign: 'center' }}>{title}</div>
-      <div>
-        {pokemons.map(
-          ({
-            name_clean,
-            abilities,
-            stats,
-            types,
-            img,
-            name,
-            base_experience,
-            height,
-            id,
-            is_default,
-            order,
-            weight,
-          }: IPokemon) => (
-            <PokemonCards
-              key={id}
-              nameClean={name_clean}
-              abilities={abilities}
-              stats={stats}
-              types={types}
-              img={img}
-              name={name}
-              baseExperience={base_experience}
-              height={height}
-              id={id}
-              isDefault={is_default}
-              order={order}
-              weight={weight}
-            />
-          ),
-        )}
+      <div style={{ textAlign: 'center', width: '100%' }}>
+        <input
+          style={{
+            width: '50%',
+            height: '50px',
+          }}
+          type="text"
+          name="searchValues"
+          value={searchValues}
+          onChange={handleSearchValue}
+        />
       </div>
       <div>
-        <button onClick={() => setLimit((val) => val - 1)}>limit--</button>
-        <button onClick={() => setLimit((val) => val + 1)}>limit++</button>
-        <span>limit{`  ${limit}  `}</span>
+        {!isloading &&
+          data &&
+          data.pokemons.map((pokemon: PokemonsReaquest) => (
+            <A href={`${LinkEnum.POKEDEX}/${pokemon.id}`}>
+              <PokemonCards key={pokemon.id} {...pokemon} />
+            </A>
+          ))}
+      </div>
+      {data && data.total > 0 && (
+        <div>
+          <button
+            onClick={() => {
+              setLimit((val: number) => (val === 5 ? val : val - 5));
+              setPage(0);
+              setQuery((val: Iquery) => ({ ...val, limit: limit > 5 ? limit - 5 : limit, offset: 0 }));
+            }}>
+            limit--
+          </button>
+          <button
+            name="limitUp"
+            onClick={() => {
+              setLimit((val: number) => (limit * (page + 1) > data.total ? val : val + 5));
+              setPage(0);
+              setQuery((val: Iquery) => ({
+                ...val,
+                limit: limit * (page + 1) > data.total ? limit : limit + 5,
+                offset: 0,
+              }));
+            }}>
+            limit++
+          </button>
+          <span>limit{`  ${limit}  `}</span>
 
-        <button onClick={() => setPage((val) => val - 1)}>prev</button>
-        <button onClick={() => setPage((val) => val + 1)}>next</button>
-        <span>page{`  ${page + 1} `}</span>
-      </div>
+          <button
+            onClick={() => {
+              setPage((val: number) => (val === 0 ? 0 : val - 1));
+              setQuery((val: Iquery) => ({ ...val, offset: page === 0 ? 0 * limit : (page - 1) * limit }));
+            }}>
+            prev
+          </button>
+          <button
+            onClick={() => {
+              setPage((val: number) => (data.total < (val + 1) * limit ? val : val + 1));
+              setQuery((val: Iquery) => ({
+                ...val,
+                offset: data.total < (page + 1) * limit ? val.offset : page * limit,
+              }));
+            }}>
+            next
+          </button>
+          <span>page{`  ${page + 1} `}</span>
+        </div>
+      )}
     </>
   );
 };
 
 export default Pokedex;
+
+/* eslint-disable */
+// import React from 'react';
+// import PokemonCards from '../../components/PokemonCards';
+// import Heading from '../../components/Heading';
+// import st from './style.module.scss';
+// import useData from '../../hooks/getData';
+// import { Ipokemons, PokemonsReaquest } from '../../interfaces/pokemons';
+
+// interface InameClean{
+//     nameClean:PokemonsReaquest["name_clean"]
+// }
+// const Pokedex: React.FC<Ipokemons> = () => {
+//   const { data, isloading, error, page, limit, setLimit, setPage } = useData<Ipokemons>('getPokemons');
+
+//   console.log(data && data.pokemons, data && data.total, 'pokemons');
+//   if (isloading) {
+//     return <div>isloading...</div>;
+//   }
+//   if (error) {
+//     return <div>Error</div>;
+//   }
+//   return (
+//     <>
+//       <Heading className={st.title}>
+//         {!isloading && data && data.total} <b>Pokemons</b>
+//       </Heading>
+//       <div>
+//         {!isloading &&
+//           data &&
+//           data.pokemons.map(
+//             ({
+//               name_clean,
+//               abilities,
+//               stats,
+//               types,
+//               img,
+//               name,
+//               base_experience,
+//               height,
+//               id,
+//               is_default,
+//               order,
+//               weight,
+//             }: PokemonsReaquest) => (
+//               <PokemonCards
+//                 key={id}
+//                 nameClean ={name_clean}
+//                 abilities={abilities}
+//                 stats={stats}
+//                 types={types}
+//                 img={img}
+//                 name={name}
+//                 baseExperience={base_experience}
+//                 height={height}
+//                 id={id}
+//                 isDefault={is_default}
+//                 order={order}
+//                 weight={weight}
+//               />
+//             ),
+//           )}
+//       </div>
+//       <div>
+//         <button onClick={() => setLimit((val: number) => val - 1)}>limit--</button>
+//         <button onClick={() => setLimit((val: number) => val + 1)}>limit++</button>
+//         <span>limit{`  ${limit}  `}</span>
+
+//         <button onClick={() => setPage((val: number) => val - 1)}>prev</button>
+//         <button onClick={() => setPage((val: number) => val + 1)}>next</button>
+//         <span>page{`  ${page + 1} `}</span>
+//       </div>
+//     </>
+//   );
+// };
+
+// export default Pokedex;
+//() => setLimit((val: number) => val - 1)
+//() => setLimit((val: number) => val + 1)
+//onClick={() => setPage((val: number) => val - 1)
+//onClick={() => setPage((val: number) => val + 1)}
+// function defineButton<T>(name:string){
+//     switch(name){
+//       case "limitDown":
+//       case "limitUp":
+//         return "limit";
+//       case "prevPage":
+//       case "nextPage":
+//         return "page";
+//       default :
+//         return "name"
+//     }
+// }

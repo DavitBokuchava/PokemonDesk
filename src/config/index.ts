@@ -8,6 +8,7 @@ interface Iserver {
 }
 interface Iendpoint {
   getPokemons: Igetpokemons;
+  getPokemon: Igetpokemons;
 }
 interface Igetpokemons {
   method: string;
@@ -32,6 +33,12 @@ export const config: Iconfig = {
         method: 'GET',
         uri: {
           pathname: '/api/v1/pokemons',
+        },
+      },
+      getPokemon: {
+        method: 'GET',
+        uri: {
+          pathname: '/api/v1/pokemon',
         },
       },
     },
