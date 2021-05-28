@@ -1,6 +1,11 @@
 /* eslint-disable */
 import config from '../config';
-
+export interface Iquery {
+  name?: string;
+  offset?: number;
+  limit?: number;
+  id?: string | number;
+}
 interface IapiConfigUri {
   host: string;
   protocol: string;

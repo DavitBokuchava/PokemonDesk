@@ -24,7 +24,7 @@ const Pokedex: React.FC<Ipokemons> = () => {
 
   const handleSearchValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValues(event.target.value);
-    setQuery((val) => ({
+    setQuery((val: Iquery) => ({
       ...val,
       name: event.target.value,
       offset: 0,
