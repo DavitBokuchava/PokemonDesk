@@ -24,7 +24,7 @@ const HomePage = () => {
       <div className={st.wrap}>
         <div className={st.left}>
           <div style={{ display: 'block' }}>
-            <Heading size="72px" className={st.buttonOne}>
+            <Heading size="s" className={st.buttonOne}>
               Hi Pokemons
             </Heading>
 

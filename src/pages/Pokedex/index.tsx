@@ -9,8 +9,10 @@ import useData from '../../hooks/getData';
 import useDebounce from '../../hooks/useDebounce';
 import { Ipokemons, PokemonsReaquest } from '../../interfaces/pokemons';
 import { Iquery } from '../../utils/getUrlWithParamsConfig';
-
-const Pokedex: React.FC<Ipokemons> = () => {
+interface Ititle {
+  title?: string;
+}
+const Pokedex: React.FC<Ititle> = ({ title }) => {
   const [searchValues, setSearchValues] = React.useState<string>('');
   const debouncedValue = useDebounce(searchValues, 1000);
   const [page, setPage] = React.useState<number>(0);
@@ -46,6 +48,7 @@ const Pokedex: React.FC<Ipokemons> = () => {
       <Heading className={st.title}>
         {!isloading && data && data.total} <b>Pokemons</b>
       </Heading>
+      <Heading className={st.title}>{title}</Heading>
       <div style={{ textAlign: 'center', width: '100%' }}>
         <input
           style={{
