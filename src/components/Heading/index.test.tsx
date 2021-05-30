@@ -25,4 +25,10 @@ describe('Heading', () => {
     });
     expect(container?.querySelector('h2')).not.toBeNull();
   });
+  it('render with props children', () => {
+    act(() => {
+      render(<Heading>Title</Heading>, container);
+    });
+    expect(container?.textContent).toBe('Title');
+  });
 });
