@@ -14,7 +14,7 @@ const useData = <T>(endpoint: string, query: object, deps: (string | number | nu
       // const url = `${config.client.server.protocol}://${config.client.server.host}${config.client.endpoint.getPokemons.uri.pathname}`;
       // console.log(id, '  url');
       try {
-        const response = await req<T>(endpoint, query, id); //fetch(`${url}?offset=${page}&limit=${limit}`).then(res=>res.json()) //
+        const response = await req<T>(endpoint, query); //fetch(`${url}?offset=${page}&limit=${limit}`).then(res=>res.json()) //
         console.log(response);
         setData(response);
       } catch (err) {

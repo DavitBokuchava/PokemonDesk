@@ -4,6 +4,10 @@ function concat(a: string, b: string): string {
 }
 concat('Hello', 'Wolrd');
 
+function toCapitalizeFirstLetter(str: string) {
+  return str.replace(str[0], str[0].toUpperCase());
+}
+export default toCapitalizeFirstLetter;
 // Напиши интерфейс для описания следующих данных
 
 // const myHometask = {

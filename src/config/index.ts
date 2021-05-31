@@ -1,28 +1,28 @@
-interface Iclient {
+export interface Iclient {
   server: Iserver;
   endpoint: Iendpoint;
 }
-interface Iserver {
+export interface Iserver {
   protocol: string;
   host: string;
 }
-interface Iendpoint {
+export interface Iendpoint {
   getPokemons: Igetpokemons;
   getPokemon: Igetpokemons;
 }
-interface Igetpokemons {
+export interface Igetpokemons {
   method: string;
   uri: Ipath;
 }
-interface Ipath {
+export interface Ipath {
   pathname: string;
 }
 
-interface Iconfig {
+export interface Iconfig {
   client: Iclient;
 }
 
-export const config: Iconfig = {
+export const config = {
   client: {
     server: {
       protocol: 'http',
@@ -38,7 +38,7 @@ export const config: Iconfig = {
       getPokemon: {
         method: 'GET',
         uri: {
-          pathname: '/api/v1/pokemon',
+          pathname: '/api/v1/pokemon/{id}',
         },
       },
     },

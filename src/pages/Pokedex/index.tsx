@@ -8,12 +8,11 @@ import st from './style.module.scss';
 import useData from '../../hooks/getData';
 import useDebounce from '../../hooks/useDebounce';
 import { Ipokemons, PokemonsReaquest } from '../../interfaces/pokemons';
-interface Iquery {
-  name?: string;
-  offset?: number;
-  limit?: number;
+import { Iquery } from '../../utils/getUrlWithParamsConfig';
+interface Ititle {
+  title?: string;
 }
-const Pokedex: React.FC<Ipokemons> = () => {
+const Pokedex: React.FC<Ititle> = ({ title }) => {
   const [searchValues, setSearchValues] = React.useState<string>('');
   const debouncedValue = useDebounce(searchValues, 1000);
   const [page, setPage] = React.useState<number>(0);
@@ -27,7 +26,7 @@ const Pokedex: React.FC<Ipokemons> = () => {
 
   const handleSearchValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValues(event.target.value);
-    setQuery((val) => ({
+    setQuery((val: Iquery) => ({
       ...val,
       name: event.target.value,
       offset: 0,
@@ -49,6 +48,7 @@ const Pokedex: React.FC<Ipokemons> = () => {
       <Heading className={st.title}>
         {!isloading && data && data.total} <b>Pokemons</b>
       </Heading>
+      <Heading className={st.title}>{title}</Heading>
       <div style={{ textAlign: 'center', width: '100%' }}>
         <input
           style={{

@@ -28,3 +28,13 @@ yarn add -D css-modules-typescript-loader
 
 yarn add -D typescript-plugin-css-modules
 
+/////////////  test \\\\\\\\\\\
+yarn add -D jest ts-jest @types/jest
+npx ts-jest config:init
+npx jest --watch
+npx jest --coverage  aall tests
+yarn add -D identity-obj-proxy
+///////////////////////////////
+
+npx pretty-quick
+
