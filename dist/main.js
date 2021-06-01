@@ -37282,12 +37282,9 @@ object-assign
         /* eslint-disable */
         var react_1 = __webpack_require__(/*! react */ './node_modules/react/index.js');
         var request_1 = __importDefault(__webpack_require__(/*! ../utils/request */ './src/utils/request.ts'));
-        var useData = function (endpoint, query, deps, id) {
+        var useData = function (endpoint, query, deps) {
           if (deps === void 0) {
             deps = [];
-          }
-          if (id === void 0) {
-            id = '';
           }
           var _a = react_1.useState(true),
             isloading = _a[0],
@@ -37658,16 +37655,40 @@ object-assign
           var _d = react_1.default.useState(5),
             limit = _d[0],
             setLimit = _d[1];
-          var _e = react_1.default.useState({
+          var _e = react_1.default.useState('0'),
+            attackFrom = _e[0],
+            setAttackFrom = _e[1];
+          var _f = react_1.default.useState('0'),
+            attackTo = _f[0],
+            setAttackTo = _f[1];
+          var debouncedAttackFrom = useDebounce_1.default(attackFrom, 1000);
+          var debouncedAttackTo = useDebounce_1.default(attackTo, 1000);
+          var _g = react_1.default.useState({
               offset: limit * page,
               limit: limit,
+              attack_from: null,
+              attack_to: null,
+              exp_from: null,
+              exp_to: null,
+              hp_from: null,
+              hp_to: null,
+              defense_from: null,
+              defense_to: null,
+              speed_from: null,
+              speed_to: null,
             }),
-            query = _e[0],
-            setQuery = _e[1];
-          var _f = getData_1.default('getPokemons', query, [debouncedValue, page, limit]),
-            data = _f.data,
-            isloading = _f.isloading,
-            error = _f.error;
+            query = _g[0],
+            setQuery = _g[1];
+          var _h = getData_1.default('getPokemons', query, [
+              debouncedValue,
+              page,
+              limit,
+              debouncedAttackFrom,
+              debouncedAttackTo,
+            ]),
+            data = _h.data,
+            isloading = _h.isloading,
+            error = _h.error;
           var handleSearchValue = function (event) {
             setSearchValues(event.target.value);
             setQuery(function (val) {
@@ -37675,6 +37696,9 @@ object-assign
             });
             setPage(0);
             setLimit(5);
+          };
+          var deps = function () {
+            return Object.keys(query);
           };
           // if (isloading) {
           //   return <div>isloading...</div>;
@@ -37694,6 +37718,31 @@ object-assign
               react_1.default.createElement('b', null, 'Pokemons'),
             ),
             react_1.default.createElement(Heading_1.default, { className: style_module_scss_1.default.title }, title),
+            react_1.default.createElement('input', {
+              placeholder: 'attack-to',
+              type: 'number',
+              name: 'attackTo',
+              value: attackTo,
+              onChange: function (e) {
+                setAttackTo(e.target.value);
+                setQuery(function (val) {
+                  return __assign(__assign({}, val), { attack_to: e.target.value });
+                });
+              },
+            }),
+            react_1.default.createElement('input', {
+              placeholder: 'attack-from',
+              type: 'number',
+              name: 'attackFrom',
+              value: attackFrom,
+              onChange: function (e) {
+                setAttackFrom(e.target.value);
+                setQuery(function (val) {
+                  return __assign(__assign({}, val), { attack_from: e.target.value });
+                });
+              },
+            }),
+            react_1.default.createElement('button', null, 'AttackFrom'),
             react_1.default.createElement(
               'div',
               { style: { textAlign: 'center', width: '100%' } },

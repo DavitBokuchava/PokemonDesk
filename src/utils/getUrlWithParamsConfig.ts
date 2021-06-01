@@ -4,7 +4,17 @@ export interface Iquery {
   name?: string;
   offset?: number;
   limit?: number;
-  id?: string | number;
+  id?: string | number | null;
+  attack_from?: string | number | null;
+  attack_to?: string | number | null;
+  exp_from?: string | number | null; // (опыт)
+  exp_to?: string | number | null;
+  hp_from?: string | number | null; //(жизнь)
+  hp_to?: string | number | null;
+  defense_from?: string | number | null;
+  defense_to?: string | number | null;
+  speed_from?: string | number | null;
+  speed_to?: string | number | null;
 }
 interface IapiConfigUri {
   host: string;

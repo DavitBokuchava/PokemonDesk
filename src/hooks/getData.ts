@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import config from '../config';
 import req from '../utils/request';
 
-const useData = <T>(endpoint: string, query: object, deps: (string | number | number)[] = [], id: string = '') => {
+const useData = <T>(endpoint: string, query: object, deps: (string | number)[] = []) => {
   const [isloading, setIsloading] = useState<boolean>(true);
   const [error, setError] = useState<boolean>(false);
   const [data, setData] = useState<T | null>(null);
