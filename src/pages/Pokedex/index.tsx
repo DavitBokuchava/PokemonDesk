@@ -12,17 +12,39 @@ import { Iquery } from '../../utils/getUrlWithParamsConfig';
 interface Ititle {
   title?: string;
 }
+interface Ideps {}
 const Pokedex: React.FC<Ititle> = ({ title }) => {
   const [searchValues, setSearchValues] = React.useState<string>('');
   const debouncedValue = useDebounce(searchValues, 1000);
+
   const [page, setPage] = React.useState<number>(0);
   const [limit, setLimit] = React.useState<number>(5);
+  const [attackFrom, setAttackFrom] = React.useState<string>('0');
+  const [attackTo, setAttackTo] = React.useState<string>('0');
+  const debouncedAttackFrom = useDebounce(attackFrom, 1000);
+  const debouncedAttackTo = useDebounce(attackTo, 1000);
   const [query, setQuery] = React.useState<Iquery>({
     offset: limit * page,
     limit: limit,
+    attack_from: null,
+    attack_to: null,
+    exp_from: null, // (опыт)
+    exp_to: null,
+    hp_from: null, //(жизнь)
+    hp_to: null,
+    defense_from: null,
+    defense_to: null,
+    speed_from: null,
+    speed_to: null,
   });
 
-  const { data, isloading, error } = useData<Ipokemons>('getPokemons', query, [debouncedValue, page, limit]);
+  const { data, isloading, error } = useData<Ipokemons>('getPokemons', query, [
+    debouncedValue,
+    page,
+    limit,
+    debouncedAttackFrom,
+    debouncedAttackTo,
+  ]);
 
   const handleSearchValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValues(event.target.value);
@@ -34,6 +56,9 @@ const Pokedex: React.FC<Ititle> = ({ title }) => {
     }));
     setPage(0);
     setLimit(5);
+  };
+  const deps = () => {
+    return Object.keys(query);
   };
 
   // if (isloading) {
@@ -49,6 +74,27 @@ const Pokedex: React.FC<Ititle> = ({ title }) => {
         {!isloading && data && data.total} <b>Pokemons</b>
       </Heading>
       <Heading className={st.title}>{title}</Heading>
+      <input
+        placeholder="attack-to"
+        type="number"
+        name="attackTo"
+        value={attackTo}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+          setAttackTo(e.target.value);
+          setQuery((val: Iquery) => ({ ...val, attack_to: e.target.value }));
+        }}
+      />
+      <input
+        placeholder="attack-from"
+        type="number"
+        name="attackFrom"
+        value={attackFrom}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+          setAttackFrom(e.target.value);
+          setQuery((val: Iquery) => ({ ...val, attack_from: e.target.value }));
+        }}
+      />
+      <button>AttackFrom</button>
       <div style={{ textAlign: 'center', width: '100%' }}>
         <input
           style={{

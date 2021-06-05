@@ -38,3 +38,9 @@ yarn add -D identity-obj-proxy
 
 npx pretty-quick
 
+////ssr\\\\
+yarn add @hapi/hapi 
+
+yarn add -D webpack-node-externals  all deps from 
+yarn add handlebars to set komponents 
+yarn add @hapi/inert  to get main.js
