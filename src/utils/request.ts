@@ -1,7 +1,7 @@
 /* eslint-disable */
 import Url from 'url';
 import getUrlWithParamsConfig from './getUrlWithParamsConfig';
-//import {Iquery} from './getUrlWithParamsConfig'
+// import {Iquery} from './getUrlWithParamsConfig'
 
 interface Ioptions {
   method: string;

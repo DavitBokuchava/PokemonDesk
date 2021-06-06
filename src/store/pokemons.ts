@@ -1,3 +1,13 @@
+/* eslint-disable */
+export enum PokemonsActionTypes {
+  FETCH_TYPES = 'FETCH_TYPES',
+  FETCH_TYPES_RESOLVE = 'FETCH_TYPES_RESOLVE',
+  FETCH_TYPES_REJECT = 'FETCH_TYPES_REJECT',
+}
+interface TypeAction {
+  type: PokemonsActionTypes;
+  payload?: string[];
+}
 const initialState = {
   types: {
     isLoading: false,
@@ -5,9 +15,10 @@ const initialState = {
     error: null,
   },
 };
-const pokemons = (state = initialState, action) => {
+type ActionTypes = TypeAction;
+const pokemons = (state = initialState, action: ActionTypes) => {
   switch (action.type) {
-    case 'FETCH_TYPES':
+    case PokemonsActionTypes.FETCH_TYPES:
       return {
         ...state,
         types: {
@@ -16,7 +27,7 @@ const pokemons = (state = initialState, action) => {
           error: null,
         },
       };
-    case 'FETCH_TYPES_RESOLVE':
+    case PokemonsActionTypes.FETCH_TYPES_RESOLVE:
       return {
         ...state,
         types: {
@@ -25,7 +36,7 @@ const pokemons = (state = initialState, action) => {
           error: null,
         },
       };
-    case 'FETCH_TYPES_REJECT':
+    case PokemonsActionTypes.FETCH_TYPES_REJECT:
       return {
         ...state,
         types: {
@@ -37,6 +48,12 @@ const pokemons = (state = initialState, action) => {
     default:
       return state;
   }
+};
+
+export const getTypesActions = () => {
+  return async (dispatch) => {
+    dispatch({ type: PokemonsActionTypes.FETCH_TYPES });
+  };
 };
 
 export default pokemons;
