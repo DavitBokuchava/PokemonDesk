@@ -41984,7 +41984,6 @@ object-assign
         var react_redux_1 = __webpack_require__(/*! react-redux */ './node_modules/react-redux/es/index.js');
         var react_1 = __webpack_require__(/*! react */ './node_modules/react/index.js');
         var pokemons_1 = __webpack_require__(/*! ../store/pokemons */ './src/store/pokemons.ts');
-        // import req from '../utils/request';
         var useData = function (query, deps) {
           if (deps === void 0) {
             deps = [];
@@ -42402,12 +42401,14 @@ object-assign
         var style_module_scss_1 = __importDefault(
           __webpack_require__(/*! ./style.module.scss */ './src/pages/Pokedex/style.module.scss'),
         );
+        // import useData from '../../hooks/getData';
         var getDataTest_1 = __importDefault(
           __webpack_require__(/*! ../../hooks/getDataTest */ './src/hooks/getDataTest.ts'),
         );
         var useDebounce_1 = __importDefault(
           __webpack_require__(/*! ../../hooks/useDebounce */ './src/hooks/useDebounce.ts'),
         );
+        // import { ConfigEndpoints } from '../../utils/request';
         var pokemons_1 = __webpack_require__(/*! ../../store/pokemons */ './src/store/pokemons.ts');
         var Pokedex = function (_a) {
           var title = _a.title;
@@ -42458,6 +42459,7 @@ object-assign
           var _h = getDataTest_1.default(query, [debouncedValue, page, limit, debouncedAttackFrom, debouncedAttackTo]),
             data = _h.data,
             isloading = _h.isloading;
+          console.log(data, ' ############ data');
           var handleSearchValue = function (event) {
             setSearchValues(event.target.value);
             setQuery(function (val) {

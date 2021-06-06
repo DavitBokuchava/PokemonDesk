@@ -6,12 +6,12 @@ import { LinkEnum } from '../../routes';
 import PokemonCards from '../../components/PokemonCards';
 import Heading from '../../components/Heading';
 import st from './style.module.scss';
-import useData from '../../hooks/getData';
+// import useData from '../../hooks/getData';
 import useDataTest from '../../hooks/getDataTest';
 import useDebounce from '../../hooks/useDebounce';
-import { Ipokemons, PokemonsReaquest } from '../../interfaces/pokemons';
+import { Ipokemons, PokemonReq } from '../../interfaces/pokemons';
 import { Iquery } from '../../utils/getUrlWithParamsConfig';
-import { ConfigEndpoints } from '../../utils/request';
+// import { ConfigEndpoints } from '../../utils/request';
 import { getTypesActions, getPokemonsTypes, getPokemonsTypesIsLoading } from '../../store/pokemons';
 interface Ititle {
   title?: string;
@@ -59,7 +59,7 @@ const Pokedex: React.FC<Ititle> = ({ title }) => {
     debouncedAttackFrom,
     debouncedAttackTo,
   ]);
-
+  console.log(data, ' ############ data');
   const handleSearchValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValues(event.target.value);
     setQuery((val: Iquery) => ({
@@ -110,7 +110,7 @@ const Pokedex: React.FC<Ititle> = ({ title }) => {
         }}
       />
       <button>AttackFrom</button>
-      <div>{pokemonsTypesIsLoading ? 'loading...' : pokemonTypes?.map((el) => <div key={el}>{el}</div>)}</div>
+      <div>{pokemonsTypesIsLoading ? 'loading...' : pokemonTypes?.map((el: string) => <div key={el}>{el}</div>)}</div>
       <div style={{ textAlign: 'center', width: '100%' }}>
         <input
           style={{
@@ -126,7 +126,7 @@ const Pokedex: React.FC<Ititle> = ({ title }) => {
       <div>
         {!isloading &&
           data &&
-          data.pokemons.map((pokemon: PokemonsReaquest) => (
+          data.pokemons.map((pokemon: PokemonReq) => (
             <A href={`${LinkEnum.POKEDEX}/${pokemon.id}`}>
               <PokemonCards key={pokemon.id} {...pokemon} />
             </A>

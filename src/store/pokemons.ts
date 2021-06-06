@@ -2,7 +2,7 @@
 import req from '../utils/request';
 import { ConfigEndpoints } from '../utils/request';
 import { Dispatch } from 'redux';
-import { ItypesRequest, Ipokemons } from '../interfaces/pokemons';
+import { ItypesRequest, PokemonsReq } from '../interfaces/pokemons';
 import { IstateRequest } from '../interfaces/index';
 import { IinitialState } from './index';
 
@@ -20,11 +20,11 @@ interface TypeAction {
 }
 interface PokemonsAction {
   type: PokemonsActionTypes;
-  payload?: Ipokemons | null; // type object makes error
+  payload?: PokemonsReq | null; // type object makes error
 }
 export interface IpokemonsInitialState {
   types: IstateRequest<string>;
-  pokemons: IstateRequest<Ipokemons>;
+  pokemons: IstateRequest<PokemonsReq>;
 }
 const initialState: IpokemonsInitialState = {
   types: {
@@ -128,7 +128,7 @@ export const getPokemons = (query = {}) => {
   return async (dispatch: Dispatch<ActionTypes>) => {
     dispatch({ type: PokemonsActionTypes.FETCH_TYPES });
     try {
-      const response = await req<Ipokemons>(ConfigEndpoints.getPokemons, query);
+      const response = await req<PokemonsReq>(ConfigEndpoints.getPokemons, query);
       console.log('######### res', response);
       dispatch({
         type: PokemonsActionTypes.FETCH_POKEMONS_RESOLVE,
