@@ -1,19 +1,26 @@
 /* eslint-disable */
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { A } from 'hookrouter';
 import { LinkEnum } from '../../routes';
 import PokemonCards from '../../components/PokemonCards';
 import Heading from '../../components/Heading';
 import st from './style.module.scss';
-import useData from '../../hooks/getData';
+// import useData from '../../hooks/getData';
+import useDataTest from '../../hooks/getDataTest';
 import useDebounce from '../../hooks/useDebounce';
 import { Ipokemons, PokemonsReaquest } from '../../interfaces/pokemons';
 import { Iquery } from '../../utils/getUrlWithParamsConfig';
+// import { ConfigEndpoints } from '../../utils/request';
+import { getTypesActions, getPokemonsTypes, getPokemonsTypesIsLoading } from '../../store/pokemons';
 interface Ititle {
   title?: string;
 }
-interface Ideps {}
+
 const Pokedex: React.FC<Ititle> = ({ title }) => {
+  const dispatch = useDispatch();
+  const pokemonTypes = useSelector(getPokemonsTypes);
+  const pokemonsTypesIsLoading = useSelector(getPokemonsTypesIsLoading);
   const [searchValues, setSearchValues] = React.useState<string>('');
   const debouncedValue = useDebounce(searchValues, 1000);
 
@@ -38,14 +45,21 @@ const Pokedex: React.FC<Ititle> = ({ title }) => {
     speed_to: null,
   });
 
-  const { data, isloading, error } = useData<Ipokemons>('getPokemons', query, [
+  // const { data, isloading, error } = useData<Ipokemons>(ConfigEndpoints.getPokemons, query, [
+  //   debouncedValue,
+  //   page,
+  //   limit,
+  //   debouncedAttackFrom,
+  //   debouncedAttackTo,
+  // ]);
+  const { data, isloading } = useDataTest<Ipokemons>(query, [
     debouncedValue,
     page,
     limit,
     debouncedAttackFrom,
     debouncedAttackTo,
   ]);
-
+  console.log(data, ' ############ data');
   const handleSearchValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValues(event.target.value);
     setQuery((val: Iquery) => ({
@@ -57,22 +71,23 @@ const Pokedex: React.FC<Ititle> = ({ title }) => {
     setPage(0);
     setLimit(5);
   };
-  const deps = () => {
-    return Object.keys(query);
-  };
+  useEffect(() => {
+    dispatch(getTypesActions());
+  }, []);
+  // const deps = () => {
+  //   return Object.keys(query);
+  // };
 
   // if (isloading) {
   //   return <div>isloading...</div>;
   // }
-  if (error) {
-    return <div>Error</div>;
-  }
+  // if (error) {
+  //   return <div>Error</div>;
+  // }
   console.log(LinkEnum.POKEMON);
   return (
     <>
-      <Heading className={st.title}>
-        {!isloading && data && data.total} <b>Pokemons</b>
-      </Heading>
+      <Heading className={st.title}>{/* {!isloading && data && data.total} <b>Pokemons</b> */}</Heading>
       <Heading className={st.title}>{title}</Heading>
       <input
         placeholder="attack-to"
@@ -95,6 +110,7 @@ const Pokedex: React.FC<Ititle> = ({ title }) => {
         }}
       />
       <button>AttackFrom</button>
+      <div>{pokemonsTypesIsLoading ? 'loading...' : pokemonTypes?.map((el: string) => <div key={el}>{el}</div>)}</div>
       <div style={{ textAlign: 'center', width: '100%' }}>
         <input
           style={{
@@ -110,13 +126,13 @@ const Pokedex: React.FC<Ititle> = ({ title }) => {
       <div>
         {!isloading &&
           data &&
-          data.pokemons.map((pokemon: PokemonsReaquest) => (
+          data?.pokemons.map((pokemon: PokemonsReaquest) => (
             <A href={`${LinkEnum.POKEDEX}/${pokemon.id}`}>
               <PokemonCards key={pokemon.id} {...pokemon} />
             </A>
           ))}
       </div>
-      {data && data.total > 0 && (
+      {data && data?.total > 0 && (
         <div>
           <button
             onClick={() => {

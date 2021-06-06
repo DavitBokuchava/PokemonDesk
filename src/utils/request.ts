@@ -1,8 +1,13 @@
 /* eslint-disable */
 import Url from 'url';
 import getUrlWithParamsConfig from './getUrlWithParamsConfig';
-//import {Iquery} from './getUrlWithParamsConfig'
+// import {Iquery} from './getUrlWithParamsConfig'
 
+export enum ConfigEndpoints {
+  getPokemons = 'getPokemons',
+  getPokemon = 'getPokemon',
+  getTypes = 'getTypes',
+}
 interface Ioptions {
   method: string;
   body?: string;

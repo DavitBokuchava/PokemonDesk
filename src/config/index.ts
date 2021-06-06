@@ -6,9 +6,11 @@ export interface Iserver {
   protocol: string;
   host: string;
 }
+
 export interface Iendpoint {
   getPokemons: Igetpokemons;
   getPokemon: Igetpokemons;
+  getTypes: Igetpokemons;
 }
 export interface Igetpokemons {
   method: string;
@@ -21,7 +23,7 @@ export interface Ipath {
 export interface Iconfig {
   client: Iclient;
 }
-
+// http://zar.hosthot.ru/api/v1/types
 export const config = {
   client: {
     server: {
@@ -39,6 +41,12 @@ export const config = {
         method: 'GET',
         uri: {
           pathname: '/api/v1/pokemon/{id}',
+        },
+      },
+      getTypes: {
+        method: 'GET',
+        uri: {
+          pathname: '/api/v1/types',
         },
       },
     },
