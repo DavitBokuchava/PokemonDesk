@@ -3,3 +3,9 @@ export interface IstateRequest<T> {
   data: null | T[] | object;
   error: null | object;
 }
+
+// export interface IstateRequestGetPokemons {
+//   isLoading: boolean;
+//   data: null | object;
+//   error: null | object;
+// }

@@ -7,7 +7,7 @@ import { getPokemons, getPokemonsData, getPokemonsIsLoading } from '../store/pok
 
 const useData = <T>(query: object, deps: (string | number)[] = []) => {
   const [isloading, setIsloading] = useState<boolean>(true);
-  const [data, setData] = useState<object | string[] | null>(null);
+  const [data, setData] = useState<object | null>(null);
   const isloadiGetPokemons = useSelector(getPokemonsIsLoading);
   const getDataOfPokemons = useSelector(getPokemonsData);
   const dispatch = useDispatch();

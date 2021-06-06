@@ -2,7 +2,7 @@
 import req from '../utils/request';
 import { ConfigEndpoints } from '../utils/request';
 import { Dispatch } from 'redux';
-import { ItypesRequest } from '../interfaces/pokemons';
+import { ItypesRequest, Ipokemons } from '../interfaces/pokemons';
 import { IstateRequest } from '../interfaces/index';
 import { IinitialState } from './index';
 
@@ -18,13 +18,13 @@ interface TypeAction {
   type: PokemonsActionTypes;
   payload?: string[];
 }
-interface PokemonAction {
+interface PokemonsAction {
   type: PokemonsActionTypes;
-  payload?: object | null;
+  payload?: Ipokemons | null; // type object makes error
 }
 export interface IpokemonsInitialState {
   types: IstateRequest<string>;
-  pokemons: IstateRequest<string>;
+  pokemons: IstateRequest<Ipokemons>;
 }
 const initialState: IpokemonsInitialState = {
   types: {
@@ -38,7 +38,7 @@ const initialState: IpokemonsInitialState = {
     error: null,
   },
 };
-type ActionTypes = TypeAction;
+type ActionTypes = TypeAction | PokemonsAction;
 const pokemons = (state = initialState, action: ActionTypes) => {
   switch (action.type) {
     case PokemonsActionTypes.FETCH_TYPES:
@@ -128,7 +128,7 @@ export const getPokemons = (query = {}) => {
   return async (dispatch: Dispatch<ActionTypes>) => {
     dispatch({ type: PokemonsActionTypes.FETCH_TYPES });
     try {
-      const response = await req<ItypesRequest>(ConfigEndpoints.getPokemons, query);
+      const response = await req<Ipokemons>(ConfigEndpoints.getPokemons, query);
       console.log('######### res', response);
       dispatch({
         type: PokemonsActionTypes.FETCH_POKEMONS_RESOLVE,

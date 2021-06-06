@@ -28,6 +28,7 @@ let pokemonData = {
 
 export type PokemonsReaquest = typeof pokemonData;
 export type ItypesRequest = string[];
+// export type IpokemonsRequest = object;
 // interface Istats {
 //     hp: number;
 //     attack: number;
