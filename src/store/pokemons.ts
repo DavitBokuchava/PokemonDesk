@@ -5,6 +5,7 @@ import { Dispatch } from 'redux';
 import { ItypesRequest } from '../interfaces/pokemons';
 import { IstateRequest } from '../interfaces/index';
 import { IinitialState } from './index';
+
 export enum PokemonsActionTypes {
   FETCH_TYPES = 'FETCH_TYPES',
   FETCH_TYPES_RESOLVE = 'FETCH_TYPES_RESOLVE',

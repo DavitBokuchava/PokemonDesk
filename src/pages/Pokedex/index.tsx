@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React from 'react';
-import { useSelector /*useDispatch*/ } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { A } from 'hookrouter';
 import { LinkEnum } from '../../routes';
 import PokemonCards from '../../components/PokemonCards';
@@ -10,12 +10,14 @@ import useData from '../../hooks/getData';
 import useDebounce from '../../hooks/useDebounce';
 import { Ipokemons, PokemonsReaquest } from '../../interfaces/pokemons';
 import { Iquery } from '../../utils/getUrlWithParamsConfig';
+import { ConfigEndpoints } from '../../utils/request';
 import { getPokemonsTypes, getPokemonsTypesIsLoading } from '../../store/pokemons';
 interface Ititle {
   title?: string;
 }
 
 const Pokedex: React.FC<Ititle> = ({ title }) => {
+  const dispatch = useDispatch();
   const pokemonTypes = useSelector(getPokemonsTypes);
   const pokemonsTypesIsLoading = useSelector(getPokemonsTypesIsLoading);
   const [searchValues, setSearchValues] = React.useState<string>('');
@@ -42,7 +44,7 @@ const Pokedex: React.FC<Ititle> = ({ title }) => {
     speed_to: null,
   });
 
-  const { data, isloading, error } = useData<Ipokemons>('getPokemons', query, [
+  const { data, isloading, error } = useData<Ipokemons>(ConfigEndpoints.getPokemons, query, [
     debouncedValue,
     page,
     limit,

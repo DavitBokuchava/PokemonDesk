@@ -336,22 +336,18 @@
         var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()(
           _node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default.a,
         );
-        ___CSS_LOADER_EXPORT___.push([
-          module.i,
-          '@import url(https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap);',
-        ]);
         // Module
         ___CSS_LOADER_EXPORT___.push([
           module.i,
-          " * {\n    box-sizing: border-box;\n}\nhtml,\nbody {\n  margin: 0;\n  padding: 0;\n}\nbody {\n  font-family: 'Karla', sans-serif;\n} \n",
+          "/* @import url('https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');\n\n* {\n    box-sizing: border-box;\n}\nhtml,\nbody {\n  margin: 0;\n  padding: 0;\n}\nbody {\n  font-family: 'Karla', sans-serif;\n}  */\n",
           '',
           {
             version: 3,
             sources: ['webpack://src/index.css'],
             names: [],
-            mappings: 'CAEA;IACI,sBAAsB;AAC1B;AACA;;EAEE,SAAS;EACT,UAAU;AACZ;AACA;EACE,gCAAgC;AAClC',
+            mappings: 'AAAA;;;;;;;;;;;;IAYI',
             sourcesContent: [
-              " @import url('https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');\n\n* {\n    box-sizing: border-box;\n}\nhtml,\nbody {\n  margin: 0;\n  padding: 0;\n}\nbody {\n  font-family: 'Karla', sans-serif;\n} \n",
+              "/* @import url('https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');\n\n* {\n    box-sizing: border-box;\n}\nhtml,\nbody {\n  margin: 0;\n  padding: 0;\n}\nbody {\n  font-family: 'Karla', sans-serif;\n}  */\n",
             ],
             sourceRoot: '',
           },
@@ -41672,7 +41668,13 @@ object-assign
         'use strict';
 
         Object.defineProperty(exports, '__esModule', { value: true });
-        exports.config = void 0;
+        exports.config = exports.PokemonsActionTypes = void 0;
+        var PokemonsActionTypes;
+        (function (PokemonsActionTypes) {
+          PokemonsActionTypes['FETCH_TYPES'] = 'FETCH_TYPES';
+          PokemonsActionTypes['FETCH_TYPES_RESOLVE'] = 'FETCH_TYPES_RESOLVE';
+          PokemonsActionTypes['FETCH_TYPES_REJECT'] = 'FETCH_TYPES_REJECT';
+        })((PokemonsActionTypes = exports.PokemonsActionTypes || (exports.PokemonsActionTypes = {})));
         // http://zar.hosthot.ru/api/v1/types
         exports.config = {
           client: {
@@ -42287,9 +42289,11 @@ object-assign
         var useDebounce_1 = __importDefault(
           __webpack_require__(/*! ../../hooks/useDebounce */ './src/hooks/useDebounce.ts'),
         );
+        var request_1 = __webpack_require__(/*! ../../utils/request */ './src/utils/request.ts');
         var pokemons_1 = __webpack_require__(/*! ../../store/pokemons */ './src/store/pokemons.ts');
         var Pokedex = function (_a) {
           var title = _a.title;
+          var dispatch = react_redux_1.useDispatch();
           var pokemonTypes = react_redux_1.useSelector(pokemons_1.getPokemonsTypes);
           var pokemonsTypesIsLoading = react_redux_1.useSelector(pokemons_1.getPokemonsTypesIsLoading);
           var _b = react_1.default.useState(''),
@@ -42326,7 +42330,7 @@ object-assign
             }),
             query = _g[0],
             setQuery = _g[1];
-          var _h = getData_1.default('getPokemons', query, [
+          var _h = getData_1.default(request_1.ConfigEndpoints.getPokemons, query, [
               debouncedValue,
               page,
               limit,
