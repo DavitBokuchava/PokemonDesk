@@ -3,11 +3,11 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
 import { getPokemons, getPokemonsData, getPokemonsIsLoading } from '../store/pokemons';
-import { PokemonsReq } from '../interfaces/pokemons';
+import { PokemonsReq, Ipokemons } from '../interfaces/pokemons';
 
 const useData = <T>(query: object, deps: (string | number)[] = []) => {
   const [isloading, setIsloading] = useState<boolean>(true);
-  const [data, setData] = useState<PokemonsReq | null>(null);
+  const [data, setData] = useState<Ipokemons | null>(null);
   const isloadiGetPokemons = useSelector(getPokemonsIsLoading);
   const getDataOfPokemons = useSelector(getPokemonsData);
   const dispatch = useDispatch();
@@ -17,9 +17,8 @@ const useData = <T>(query: object, deps: (string | number)[] = []) => {
   }, deps);
   useEffect(() => {
     setIsloading(isloadiGetPokemons);
-    if (isloadiGetPokemons) {
-      setData(getDataOfPokemons);
-    }
+
+    setData(getDataOfPokemons);
   }, [isloadiGetPokemons]);
   return {
     data,

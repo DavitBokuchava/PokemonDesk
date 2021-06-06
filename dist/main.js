@@ -42003,9 +42003,7 @@ object-assign
           react_1.useEffect(
             function () {
               setIsloading(isloadiGetPokemons);
-              if (isloadiGetPokemons) {
-                setData(getDataOfPokemons);
-              }
+              setData(getDataOfPokemons);
             },
             [isloadiGetPokemons],
           );
@@ -42541,16 +42539,18 @@ object-assign
               null,
               !isloading &&
                 data &&
-                data.pokemons.map(function (pokemon) {
-                  return react_1.default.createElement(
-                    hookrouter_1.A,
-                    { href: routes_1.LinkEnum.POKEDEX + '/' + pokemon.id },
-                    react_1.default.createElement(PokemonCards_1.default, __assign({ key: pokemon.id }, pokemon)),
-                  );
-                }),
+                (data === null || data === void 0
+                  ? void 0
+                  : data.pokemons.map(function (pokemon) {
+                      return react_1.default.createElement(
+                        hookrouter_1.A,
+                        { href: routes_1.LinkEnum.POKEDEX + '/' + pokemon.id },
+                        react_1.default.createElement(PokemonCards_1.default, __assign({ key: pokemon.id }, pokemon)),
+                      );
+                    })),
             ),
             data &&
-              data.total > 0 &&
+              (data === null || data === void 0 ? void 0 : data.total) > 0 &&
               react_1.default.createElement(
                 'div',
                 null,
@@ -43058,7 +43058,7 @@ object-assign
             return mod && mod.__esModule ? mod : { default: mod };
           };
         Object.defineProperty(exports, '__esModule', { value: true });
-        exports.getPokemons = exports.getTypesActions = exports.getPokemonsIsLoading = exports.getPokemonsData = exports.getPokemonsTypesIsLoading = exports.getPokemonsTypes = exports.PokemonsActionTypes = void 0;
+        exports.getTypesActions = exports.getPokemons = exports.getPokemonsIsLoading = exports.getPokemonsData = exports.getPokemonsTypesIsLoading = exports.getPokemonsTypes = exports.GetPokemonsActionTypes = exports.PokemonsActionTypes = void 0;
         /* eslint-disable */
         var request_1 = __importDefault(__webpack_require__(/*! ../utils/request */ './src/utils/request.ts'));
         var request_2 = __webpack_require__(/*! ../utils/request */ './src/utils/request.ts');
@@ -43067,10 +43067,16 @@ object-assign
           PokemonsActionTypes['FETCH_TYPES'] = 'FETCH_TYPES';
           PokemonsActionTypes['FETCH_TYPES_RESOLVE'] = 'FETCH_TYPES_RESOLVE';
           PokemonsActionTypes['FETCH_TYPES_REJECT'] = 'FETCH_TYPES_REJECT';
-          PokemonsActionTypes['FETCH_POKEMONS'] = 'FETCH_POKEMONS';
-          PokemonsActionTypes['FETCH_POKEMONS_RESOLVE'] = 'FETCH_POKEMONS_RESOLVE';
-          PokemonsActionTypes['FETCH_POKEMONS_REJECT'] = 'FETCH_POKEMONS_REJECT';
+          // FETCH_POKEMONS = 'FETCH_POKEMONS',
+          // FETCH_POKEMONS_RESOLVE = 'FETCH_POKEMONS_RESOLVE',
+          // FETCH_POKEMONS_REJECT = 'FETCH_POKEMONS_REJECT',
         })((PokemonsActionTypes = exports.PokemonsActionTypes || (exports.PokemonsActionTypes = {})));
+        var GetPokemonsActionTypes;
+        (function (GetPokemonsActionTypes) {
+          GetPokemonsActionTypes['FETCH_POKEMONS'] = 'FETCH_POKEMONS';
+          GetPokemonsActionTypes['FETCH_POKEMONS_RESOLVE'] = 'FETCH_POKEMONS_RESOLVE';
+          GetPokemonsActionTypes['FETCH_POKEMONS_REJECT'] = 'FETCH_POKEMONS_REJECT';
+        })((GetPokemonsActionTypes = exports.GetPokemonsActionTypes || (exports.GetPokemonsActionTypes = {})));
         var initialState = {
           types: {
             isLoading: false,
@@ -43112,7 +43118,7 @@ object-assign
                   error: action.payload,
                 },
               });
-            case PokemonsActionTypes.FETCH_POKEMONS:
+            case GetPokemonsActionTypes.FETCH_POKEMONS:
               return __assign(__assign({}, state), {
                 pokemons: {
                   isLoading: true,
@@ -43120,7 +43126,7 @@ object-assign
                   error: null,
                 },
               });
-            case PokemonsActionTypes.FETCH_POKEMONS_RESOLVE:
+            case GetPokemonsActionTypes.FETCH_POKEMONS_RESOLVE:
               return __assign(__assign({}, state), {
                 pokemons: {
                   isLoading: false,
@@ -43128,7 +43134,7 @@ object-assign
                   error: null,
                 },
               });
-            case PokemonsActionTypes.FETCH_POKEMONS_REJECT:
+            case GetPokemonsActionTypes.FETCH_POKEMONS_REJECT:
               return __assign(__assign({}, state), {
                 pokemons: {
                   isLoading: false,
@@ -43147,15 +43153,52 @@ object-assign
           return state.pokemons.types.isLoading;
         };
         exports.getPokemonsData = function (state) {
-          return state.pokemons.types.data;
+          return state.pokemons.pokemons.data;
         };
         exports.getPokemonsIsLoading = function (state) {
           return state.pokemons.pokemons.isLoading;
         };
-        exports.getTypesActions = function () {
+        exports.getPokemons = function (query) {
+          if (query === void 0) {
+            query = {};
+          }
           return function (dispatch) {
             return __awaiter(void 0, void 0, void 0, function () {
               var response, err_1;
+              return __generator(this, function (_a) {
+                switch (_a.label) {
+                  case 0:
+                    dispatch({ type: GetPokemonsActionTypes.FETCH_POKEMONS });
+                    _a.label = 1;
+                  case 1:
+                    _a.trys.push([1, 3, , 4]);
+                    return [4 /*yield*/, request_1.default(request_2.ConfigEndpoints.getPokemons, query)];
+                  case 2:
+                    response = _a.sent();
+                    console.log('######### res', response);
+                    dispatch({
+                      type: GetPokemonsActionTypes.FETCH_POKEMONS_RESOLVE,
+                      payload: response,
+                    });
+                    return [3 /*break*/, 4];
+                  case 3:
+                    err_1 = _a.sent();
+                    dispatch({
+                      type: GetPokemonsActionTypes.FETCH_POKEMONS_REJECT,
+                      payload: err_1,
+                    });
+                    return [3 /*break*/, 4];
+                  case 4:
+                    return [2 /*return*/];
+                }
+              });
+            });
+          };
+        };
+        exports.getTypesActions = function () {
+          return function (dispatch) {
+            return __awaiter(void 0, void 0, void 0, function () {
+              var response, err_2;
               return __generator(this, function (_a) {
                 switch (_a.label) {
                   case 0:
@@ -43173,46 +43216,9 @@ object-assign
                     });
                     return [3 /*break*/, 4];
                   case 3:
-                    err_1 = _a.sent();
-                    dispatch({
-                      type: PokemonsActionTypes.FETCH_TYPES_REJECT,
-                      payload: err_1,
-                    });
-                    return [3 /*break*/, 4];
-                  case 4:
-                    return [2 /*return*/];
-                }
-              });
-            });
-          };
-        };
-        exports.getPokemons = function (query) {
-          if (query === void 0) {
-            query = {};
-          }
-          return function (dispatch) {
-            return __awaiter(void 0, void 0, void 0, function () {
-              var response, err_2;
-              return __generator(this, function (_a) {
-                switch (_a.label) {
-                  case 0:
-                    dispatch({ type: PokemonsActionTypes.FETCH_TYPES });
-                    _a.label = 1;
-                  case 1:
-                    _a.trys.push([1, 3, , 4]);
-                    return [4 /*yield*/, request_1.default(request_2.ConfigEndpoints.getPokemons, query)];
-                  case 2:
-                    response = _a.sent();
-                    console.log('######### res', response);
-                    dispatch({
-                      type: PokemonsActionTypes.FETCH_POKEMONS_RESOLVE,
-                      payload: response,
-                    });
-                    return [3 /*break*/, 4];
-                  case 3:
                     err_2 = _a.sent();
                     dispatch({
-                      type: PokemonsActionTypes.FETCH_POKEMONS_REJECT,
+                      type: PokemonsActionTypes.FETCH_TYPES_REJECT,
                       payload: err_2,
                     });
                     return [3 /*break*/, 4];

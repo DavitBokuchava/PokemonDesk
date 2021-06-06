@@ -9,7 +9,7 @@ import st from './style.module.scss';
 // import useData from '../../hooks/getData';
 import useDataTest from '../../hooks/getDataTest';
 import useDebounce from '../../hooks/useDebounce';
-import { Ipokemons, PokemonReq } from '../../interfaces/pokemons';
+import { Ipokemons, PokemonsReaquest } from '../../interfaces/pokemons';
 import { Iquery } from '../../utils/getUrlWithParamsConfig';
 // import { ConfigEndpoints } from '../../utils/request';
 import { getTypesActions, getPokemonsTypes, getPokemonsTypesIsLoading } from '../../store/pokemons';
@@ -126,13 +126,13 @@ const Pokedex: React.FC<Ititle> = ({ title }) => {
       <div>
         {!isloading &&
           data &&
-          data.pokemons.map((pokemon: PokemonReq) => (
+          data?.pokemons.map((pokemon: PokemonsReaquest) => (
             <A href={`${LinkEnum.POKEDEX}/${pokemon.id}`}>
               <PokemonCards key={pokemon.id} {...pokemon} />
             </A>
           ))}
       </div>
-      {data && data.total > 0 && (
+      {data && data?.total > 0 && (
         <div>
           <button
             onClick={() => {
