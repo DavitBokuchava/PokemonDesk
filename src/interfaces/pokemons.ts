@@ -27,7 +27,7 @@ let pokemonData = {
 };
 
 export type PokemonsReaquest = typeof pokemonData;
-
+export type ItypesRequest = string[];
 // interface Istats {
 //     hp: number;
 //     attack: number;

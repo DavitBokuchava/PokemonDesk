@@ -6,6 +6,7 @@ export interface Iserver {
   protocol: string;
   host: string;
 }
+
 export interface Iendpoint {
   getPokemons: Igetpokemons;
   getPokemon: Igetpokemons;

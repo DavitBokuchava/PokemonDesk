@@ -5,16 +5,14 @@ import App from './App';
 import configStore from './configStore';
 import './index.css';
 /* eslint-disable */
-const strore = configStore({});
+const store = configStore({});
 interface IApp {
   App: () => JSX.Element | null;
 }
 
 ReactDom.render(
-  React.createElement(
-    <Provider strore={store}>
-      <App />
-    </Provider>,
-  ),
+  <Provider store={store}>
+    <App />
+  </Provider>,
   document.getElementById('root'),
 );

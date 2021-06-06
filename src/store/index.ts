@@ -1,5 +1,10 @@
+/* eslint-disable */
 import { combineReducers } from 'redux';
-import pokemons from './pokemons';
+import pokemons, { IpokemonsInitialState } from './pokemons';
+
+export interface IinitialState {
+  pokemons: IpokemonsInitialState;
+}
 
 const createRootReducer = () => {
   combineReducers({

@@ -1,5 +1,6 @@
 /* eslint-disable */
 import React from 'react';
+import { useSelector /*useDispatch*/ } from 'react-redux';
 import { A } from 'hookrouter';
 import { LinkEnum } from '../../routes';
 import PokemonCards from '../../components/PokemonCards';
@@ -9,11 +10,14 @@ import useData from '../../hooks/getData';
 import useDebounce from '../../hooks/useDebounce';
 import { Ipokemons, PokemonsReaquest } from '../../interfaces/pokemons';
 import { Iquery } from '../../utils/getUrlWithParamsConfig';
+import { getPokemonsTypes, getPokemonsTypesIsLoading } from '../../store/pokemons';
 interface Ititle {
   title?: string;
 }
-interface Ideps {}
+
 const Pokedex: React.FC<Ititle> = ({ title }) => {
+  const pokemonTypes = useSelector(getPokemonsTypes);
+  const pokemonsTypesIsLoading = useSelector(getPokemonsTypesIsLoading);
   const [searchValues, setSearchValues] = React.useState<string>('');
   const debouncedValue = useDebounce(searchValues, 1000);
 
@@ -57,9 +61,9 @@ const Pokedex: React.FC<Ititle> = ({ title }) => {
     setPage(0);
     setLimit(5);
   };
-  const deps = () => {
-    return Object.keys(query);
-  };
+  // const deps = () => {
+  //   return Object.keys(query);
+  // };
 
   // if (isloading) {
   //   return <div>isloading...</div>;
@@ -95,6 +99,7 @@ const Pokedex: React.FC<Ititle> = ({ title }) => {
         }}
       />
       <button>AttackFrom</button>
+      <div>{pokemonsTypesIsLoading ? 'loading...' : pokemonTypes?.map((el) => <div key={el}>{el}</div>)}</div>
       <div style={{ textAlign: 'center', width: '100%' }}>
         <input
           style={{

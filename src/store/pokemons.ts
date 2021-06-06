@@ -1,4 +1,10 @@
 /* eslint-disable */
+import req from '../utils/request';
+import { ConfigEndpoints } from '../utils/request';
+import { Dispatch } from 'redux';
+import { ItypesRequest } from '../interfaces/pokemons';
+import { IstateRequest } from '../interfaces/index';
+import { IinitialState } from './index';
 export enum PokemonsActionTypes {
   FETCH_TYPES = 'FETCH_TYPES',
   FETCH_TYPES_RESOLVE = 'FETCH_TYPES_RESOLVE',
@@ -8,7 +14,10 @@ interface TypeAction {
   type: PokemonsActionTypes;
   payload?: string[];
 }
-const initialState = {
+export interface IpokemonsInitialState {
+  types: IstateRequest<string>;
+}
+const initialState: IpokemonsInitialState = {
   types: {
     isLoading: false,
     data: null,
@@ -50,9 +59,24 @@ const pokemons = (state = initialState, action: ActionTypes) => {
   }
 };
 
+export const getPokemonsTypes = (state: IinitialState) => state.pokemons.types.data;
+export const getPokemonsTypesIsLoading = (state: IinitialState) => state.pokemons.types.isLoading;
 export const getTypesActions = () => {
-  return async (dispatch) => {
+  return async (dispatch: Dispatch<ActionTypes>) => {
     dispatch({ type: PokemonsActionTypes.FETCH_TYPES });
+    try {
+      const response = await req<ItypesRequest>(ConfigEndpoints.getTypes, {});
+      console.log('######### res', response);
+      dispatch({
+        type: PokemonsActionTypes.FETCH_TYPES_RESOLVE,
+        payload: response,
+      });
+    } catch (err) {
+      dispatch({
+        type: PokemonsActionTypes.FETCH_TYPES_REJECT,
+        payload: err,
+      });
+    }
   };
 };
 
