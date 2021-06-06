@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { A } from 'hookrouter';
 import { LinkEnum } from '../../routes';
@@ -11,7 +11,7 @@ import useDebounce from '../../hooks/useDebounce';
 import { Ipokemons, PokemonsReaquest } from '../../interfaces/pokemons';
 import { Iquery } from '../../utils/getUrlWithParamsConfig';
 import { ConfigEndpoints } from '../../utils/request';
-import { getPokemonsTypes, getPokemonsTypesIsLoading } from '../../store/pokemons';
+import { getTypesActions, getPokemonsTypes, getPokemonsTypesIsLoading } from '../../store/pokemons';
 interface Ititle {
   title?: string;
 }
@@ -63,6 +63,9 @@ const Pokedex: React.FC<Ititle> = ({ title }) => {
     setPage(0);
     setLimit(5);
   };
+  useEffect(() => {
+    dispatch(getTypesActions());
+  }, []);
   // const deps = () => {
   //   return Object.keys(query);
   // };

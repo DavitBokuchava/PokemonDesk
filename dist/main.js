@@ -41668,13 +41668,7 @@ object-assign
         'use strict';
 
         Object.defineProperty(exports, '__esModule', { value: true });
-        exports.config = exports.PokemonsActionTypes = void 0;
-        var PokemonsActionTypes;
-        (function (PokemonsActionTypes) {
-          PokemonsActionTypes['FETCH_TYPES'] = 'FETCH_TYPES';
-          PokemonsActionTypes['FETCH_TYPES_RESOLVE'] = 'FETCH_TYPES_RESOLVE';
-          PokemonsActionTypes['FETCH_TYPES_REJECT'] = 'FETCH_TYPES_REJECT';
-        })((PokemonsActionTypes = exports.PokemonsActionTypes || (exports.PokemonsActionTypes = {})));
+        exports.config = void 0;
         // http://zar.hosthot.ru/api/v1/types
         exports.config = {
           client: {
@@ -42265,6 +42259,42 @@ object-assign
               };
             return __assign.apply(this, arguments);
           };
+        var __createBinding =
+          (this && this.__createBinding) ||
+          (Object.create
+            ? function (o, m, k, k2) {
+                if (k2 === undefined) k2 = k;
+                Object.defineProperty(o, k2, {
+                  enumerable: true,
+                  get: function () {
+                    return m[k];
+                  },
+                });
+              }
+            : function (o, m, k, k2) {
+                if (k2 === undefined) k2 = k;
+                o[k2] = m[k];
+              });
+        var __setModuleDefault =
+          (this && this.__setModuleDefault) ||
+          (Object.create
+            ? function (o, v) {
+                Object.defineProperty(o, 'default', { enumerable: true, value: v });
+              }
+            : function (o, v) {
+                o['default'] = v;
+              });
+        var __importStar =
+          (this && this.__importStar) ||
+          function (mod) {
+            if (mod && mod.__esModule) return mod;
+            var result = {};
+            if (mod != null)
+              for (var k in mod)
+                if (k !== 'default' && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+            __setModuleDefault(result, mod);
+            return result;
+          };
         var __importDefault =
           (this && this.__importDefault) ||
           function (mod) {
@@ -42272,7 +42302,7 @@ object-assign
           };
         Object.defineProperty(exports, '__esModule', { value: true });
         /* eslint-disable */
-        var react_1 = __importDefault(__webpack_require__(/*! react */ './node_modules/react/index.js'));
+        var react_1 = __importStar(__webpack_require__(/*! react */ './node_modules/react/index.js'));
         var react_redux_1 = __webpack_require__(/*! react-redux */ './node_modules/react-redux/es/index.js');
         var hookrouter_1 = __webpack_require__(/*! hookrouter */ './node_modules/hookrouter/dist/index.js');
         var routes_1 = __webpack_require__(/*! ../../routes */ './src/routes.tsx');
@@ -42348,6 +42378,9 @@ object-assign
             setPage(0);
             setLimit(5);
           };
+          react_1.useEffect(function () {
+            dispatch(pokemons_1.getTypesActions());
+          }, []);
           // const deps = () => {
           //   return Object.keys(query);
           // };
