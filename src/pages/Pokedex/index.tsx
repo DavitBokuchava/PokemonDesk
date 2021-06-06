@@ -7,6 +7,7 @@ import PokemonCards from '../../components/PokemonCards';
 import Heading from '../../components/Heading';
 import st from './style.module.scss';
 import useData from '../../hooks/getData';
+import useDataTest from '../../hooks/getDataTest';
 import useDebounce from '../../hooks/useDebounce';
 import { Ipokemons, PokemonsReaquest } from '../../interfaces/pokemons';
 import { Iquery } from '../../utils/getUrlWithParamsConfig';
@@ -44,7 +45,14 @@ const Pokedex: React.FC<Ititle> = ({ title }) => {
     speed_to: null,
   });
 
-  const { data, isloading, error } = useData<Ipokemons>(ConfigEndpoints.getPokemons, query, [
+  // const { data, isloading, error } = useData<Ipokemons>(ConfigEndpoints.getPokemons, query, [
+  //   debouncedValue,
+  //   page,
+  //   limit,
+  //   debouncedAttackFrom,
+  //   debouncedAttackTo,
+  // ]);
+  const { data, isloading } = useDataTest<Ipokemons>(query, [
     debouncedValue,
     page,
     limit,
@@ -73,15 +81,13 @@ const Pokedex: React.FC<Ititle> = ({ title }) => {
   // if (isloading) {
   //   return <div>isloading...</div>;
   // }
-  if (error) {
-    return <div>Error</div>;
-  }
+  // if (error) {
+  //   return <div>Error</div>;
+  // }
   console.log(LinkEnum.POKEMON);
   return (
     <>
-      <Heading className={st.title}>
-        {!isloading && data && data.total} <b>Pokemons</b>
-      </Heading>
+      <Heading className={st.title}>{/* {!isloading && data && data.total} <b>Pokemons</b> */}</Heading>
       <Heading className={st.title}>{title}</Heading>
       <input
         placeholder="attack-to"

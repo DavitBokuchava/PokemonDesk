@@ -10,16 +10,29 @@ export enum PokemonsActionTypes {
   FETCH_TYPES = 'FETCH_TYPES',
   FETCH_TYPES_RESOLVE = 'FETCH_TYPES_RESOLVE',
   FETCH_TYPES_REJECT = 'FETCH_TYPES_REJECT',
+  FETCH_POKEMONS = 'FETCH_POKEMONS',
+  FETCH_POKEMONS_RESOLVE = 'FETCH_POKEMONS_RESOLVE',
+  FETCH_POKEMONS_REJECT = 'FETCH_POKEMONS_REJECT',
 }
 interface TypeAction {
   type: PokemonsActionTypes;
   payload?: string[];
 }
+interface PokemonAction {
+  type: PokemonsActionTypes;
+  payload?: object | null;
+}
 export interface IpokemonsInitialState {
   types: IstateRequest<string>;
+  pokemons: IstateRequest<string>;
 }
 const initialState: IpokemonsInitialState = {
   types: {
+    isLoading: false,
+    data: null,
+    error: null,
+  },
+  pokemons: {
     isLoading: false,
     data: null,
     error: null,
@@ -55,6 +68,33 @@ const pokemons = (state = initialState, action: ActionTypes) => {
           error: action.payload,
         },
       };
+    case PokemonsActionTypes.FETCH_POKEMONS:
+      return {
+        ...state,
+        pokemons: {
+          isLoading: true,
+          data: null,
+          error: null,
+        },
+      };
+    case PokemonsActionTypes.FETCH_POKEMONS_RESOLVE:
+      return {
+        ...state,
+        pokemons: {
+          isLoading: false,
+          data: action.payload,
+          error: null,
+        },
+      };
+    case PokemonsActionTypes.FETCH_POKEMONS_REJECT:
+      return {
+        ...state,
+        pokemons: {
+          isLoading: false,
+          data: null,
+          error: action.payload,
+        },
+      };
     default:
       return state;
   }
@@ -62,6 +102,10 @@ const pokemons = (state = initialState, action: ActionTypes) => {
 
 export const getPokemonsTypes = (state: IinitialState) => state.pokemons.types.data;
 export const getPokemonsTypesIsLoading = (state: IinitialState) => state.pokemons.types.isLoading;
+
+export const getPokemonsData = (state: IinitialState) => state.pokemons.types.data;
+export const getPokemonsIsLoading = (state: IinitialState) => state.pokemons.pokemons.isLoading;
+
 export const getTypesActions = () => {
   return async (dispatch: Dispatch<ActionTypes>) => {
     dispatch({ type: PokemonsActionTypes.FETCH_TYPES });
@@ -75,6 +119,24 @@ export const getTypesActions = () => {
     } catch (err) {
       dispatch({
         type: PokemonsActionTypes.FETCH_TYPES_REJECT,
+        payload: err,
+      });
+    }
+  };
+};
+export const getPokemons = (query = {}) => {
+  return async (dispatch: Dispatch<ActionTypes>) => {
+    dispatch({ type: PokemonsActionTypes.FETCH_TYPES });
+    try {
+      const response = await req<ItypesRequest>(ConfigEndpoints.getPokemons, query);
+      console.log('######### res', response);
+      dispatch({
+        type: PokemonsActionTypes.FETCH_POKEMONS_RESOLVE,
+        payload: response,
+      });
+    } catch (err) {
+      dispatch({
+        type: PokemonsActionTypes.FETCH_POKEMONS_REJECT,
         payload: err,
       });
     }

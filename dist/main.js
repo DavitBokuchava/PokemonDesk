@@ -41971,6 +41971,93 @@ object-assign
         /***/
       },
 
+    /***/ './src/hooks/getDataTest.ts':
+      /*!**********************************!*\
+  !*** ./src/hooks/getDataTest.ts ***!
+  \**********************************/
+      /*! no static exports found */
+      /***/ function (module, exports, __webpack_require__) {
+        'use strict';
+
+        /* eslint-disable */
+        Object.defineProperty(exports, '__esModule', { value: true });
+        var react_redux_1 = __webpack_require__(/*! react-redux */ './node_modules/react-redux/es/index.js');
+        var react_1 = __webpack_require__(/*! react */ './node_modules/react/index.js');
+        var pokemons_1 = __webpack_require__(/*! ../store/pokemons */ './src/store/pokemons.ts');
+        // import req from '../utils/request';
+        var useData = function (query, deps) {
+          if (deps === void 0) {
+            deps = [];
+          }
+          var _a = react_1.useState(true),
+            isloading = _a[0],
+            setIsloading = _a[1];
+          var _b = react_1.useState(null),
+            data = _b[0],
+            setData = _b[1];
+          var isloadiGetPokemons = react_redux_1.useSelector(pokemons_1.getPokemonsIsLoading);
+          var getDataOfPokemons = react_redux_1.useSelector(pokemons_1.getPokemonsData);
+          var dispatch = react_redux_1.useDispatch();
+          react_1.useEffect(function () {
+            dispatch(pokemons_1.getPokemons(query));
+          }, deps);
+          react_1.useEffect(
+            function () {
+              setIsloading(isloadiGetPokemons);
+              if (isloadiGetPokemons) {
+                setData(getDataOfPokemons);
+              }
+            },
+            [isloadiGetPokemons],
+          );
+          return {
+            data: data,
+            isloading: isloading,
+          };
+        };
+        exports.default = useData;
+        //   setPokemons(response.pokemons);
+        //   setTotal(response.total);
+        // const [total, setTotal] = useState(0);
+        // const [pokemons, setPokemons] = useState([]);
+        // import { useState, useEffect } from 'react';
+        // import { useSelector,useDispatch } from 'react-redux';
+        // import { getPokemons } from '../store/pokemons';
+        // import req from '../utils/request';
+        // const useData = <T>(endpoint: string, query: object, deps: (string | number)[] = []) => {
+        //   const [isloading, setIsloading] = useState<boolean>(true);
+        //   const [error, setError] = useState<boolean>(false);
+        //   const [data, setData] = useState<T | null>(null);
+        //   useEffect(() => {
+        //     const getData = async (): Promise<void> => {
+        //       setIsloading(true);
+        //       try {
+        //       } catch (err) {
+        //         setError(true);
+        //         console.log(err);
+        //       } finally {
+        //         setIsloading(false);
+        //       }
+        //     };
+        //     getData();
+        //   }, deps);
+        //   return {
+        //     data,
+        //     isloading,
+        //     error,
+        //   };
+        // };
+        // useEffect(()=>{
+        // },[])
+        // export default useData;
+        // //   setPokemons(response.pokemons);
+        // //   setTotal(response.total);
+        // // const [total, setTotal] = useState(0);
+        // // const [pokemons, setPokemons] = useState([]);
+
+        /***/
+      },
+
     /***/ './src/hooks/useDebounce.ts':
       /*!**********************************!*\
   !*** ./src/hooks/useDebounce.ts ***!
@@ -42315,11 +42402,12 @@ object-assign
         var style_module_scss_1 = __importDefault(
           __webpack_require__(/*! ./style.module.scss */ './src/pages/Pokedex/style.module.scss'),
         );
-        var getData_1 = __importDefault(__webpack_require__(/*! ../../hooks/getData */ './src/hooks/getData.ts'));
+        var getDataTest_1 = __importDefault(
+          __webpack_require__(/*! ../../hooks/getDataTest */ './src/hooks/getDataTest.ts'),
+        );
         var useDebounce_1 = __importDefault(
           __webpack_require__(/*! ../../hooks/useDebounce */ './src/hooks/useDebounce.ts'),
         );
-        var request_1 = __webpack_require__(/*! ../../utils/request */ './src/utils/request.ts');
         var pokemons_1 = __webpack_require__(/*! ../../store/pokemons */ './src/store/pokemons.ts');
         var Pokedex = function (_a) {
           var title = _a.title;
@@ -42360,16 +42448,16 @@ object-assign
             }),
             query = _g[0],
             setQuery = _g[1];
-          var _h = getData_1.default(request_1.ConfigEndpoints.getPokemons, query, [
-              debouncedValue,
-              page,
-              limit,
-              debouncedAttackFrom,
-              debouncedAttackTo,
-            ]),
+          // const { data, isloading, error } = useData<Ipokemons>(ConfigEndpoints.getPokemons, query, [
+          //   debouncedValue,
+          //   page,
+          //   limit,
+          //   debouncedAttackFrom,
+          //   debouncedAttackTo,
+          // ]);
+          var _h = getDataTest_1.default(query, [debouncedValue, page, limit, debouncedAttackFrom, debouncedAttackTo]),
             data = _h.data,
-            isloading = _h.isloading,
-            error = _h.error;
+            isloading = _h.isloading;
           var handleSearchValue = function (event) {
             setSearchValues(event.target.value);
             setQuery(function (val) {
@@ -42387,20 +42475,14 @@ object-assign
           // if (isloading) {
           //   return <div>isloading...</div>;
           // }
-          if (error) {
-            return react_1.default.createElement('div', null, 'Error');
-          }
+          // if (error) {
+          //   return <div>Error</div>;
+          // }
           console.log(routes_1.LinkEnum.POKEMON);
           return react_1.default.createElement(
             react_1.default.Fragment,
             null,
-            react_1.default.createElement(
-              Heading_1.default,
-              { className: style_module_scss_1.default.title },
-              !isloading && data && data.total,
-              ' ',
-              react_1.default.createElement('b', null, 'Pokemons'),
-            ),
+            react_1.default.createElement(Heading_1.default, { className: style_module_scss_1.default.title }),
             react_1.default.createElement(Heading_1.default, { className: style_module_scss_1.default.title }, title),
             react_1.default.createElement('input', {
               placeholder: 'attack-to',
@@ -42974,7 +43056,7 @@ object-assign
             return mod && mod.__esModule ? mod : { default: mod };
           };
         Object.defineProperty(exports, '__esModule', { value: true });
-        exports.getTypesActions = exports.getPokemonsTypesIsLoading = exports.getPokemonsTypes = exports.PokemonsActionTypes = void 0;
+        exports.getPokemons = exports.getTypesActions = exports.getPokemonsIsLoading = exports.getPokemonsData = exports.getPokemonsTypesIsLoading = exports.getPokemonsTypes = exports.PokemonsActionTypes = void 0;
         /* eslint-disable */
         var request_1 = __importDefault(__webpack_require__(/*! ../utils/request */ './src/utils/request.ts'));
         var request_2 = __webpack_require__(/*! ../utils/request */ './src/utils/request.ts');
@@ -42983,9 +43065,17 @@ object-assign
           PokemonsActionTypes['FETCH_TYPES'] = 'FETCH_TYPES';
           PokemonsActionTypes['FETCH_TYPES_RESOLVE'] = 'FETCH_TYPES_RESOLVE';
           PokemonsActionTypes['FETCH_TYPES_REJECT'] = 'FETCH_TYPES_REJECT';
+          PokemonsActionTypes['FETCH_POKEMONS'] = 'FETCH_POKEMONS';
+          PokemonsActionTypes['FETCH_POKEMONS_RESOLVE'] = 'FETCH_POKEMONS_RESOLVE';
+          PokemonsActionTypes['FETCH_POKEMONS_REJECT'] = 'FETCH_POKEMONS_REJECT';
         })((PokemonsActionTypes = exports.PokemonsActionTypes || (exports.PokemonsActionTypes = {})));
         var initialState = {
           types: {
+            isLoading: false,
+            data: null,
+            error: null,
+          },
+          pokemons: {
             isLoading: false,
             data: null,
             error: null,
@@ -43020,6 +43110,30 @@ object-assign
                   error: action.payload,
                 },
               });
+            case PokemonsActionTypes.FETCH_POKEMONS:
+              return __assign(__assign({}, state), {
+                pokemons: {
+                  isLoading: true,
+                  data: null,
+                  error: null,
+                },
+              });
+            case PokemonsActionTypes.FETCH_POKEMONS_RESOLVE:
+              return __assign(__assign({}, state), {
+                pokemons: {
+                  isLoading: false,
+                  data: action.payload,
+                  error: null,
+                },
+              });
+            case PokemonsActionTypes.FETCH_POKEMONS_REJECT:
+              return __assign(__assign({}, state), {
+                pokemons: {
+                  isLoading: false,
+                  data: null,
+                  error: action.payload,
+                },
+              });
             default:
               return state;
           }
@@ -43029,6 +43143,12 @@ object-assign
         };
         exports.getPokemonsTypesIsLoading = function (state) {
           return state.pokemons.types.isLoading;
+        };
+        exports.getPokemonsData = function (state) {
+          return state.pokemons.types.data;
+        };
+        exports.getPokemonsIsLoading = function (state) {
+          return state.pokemons.pokemons.isLoading;
         };
         exports.getTypesActions = function () {
           return function (dispatch) {
@@ -43055,6 +43175,43 @@ object-assign
                     dispatch({
                       type: PokemonsActionTypes.FETCH_TYPES_REJECT,
                       payload: err_1,
+                    });
+                    return [3 /*break*/, 4];
+                  case 4:
+                    return [2 /*return*/];
+                }
+              });
+            });
+          };
+        };
+        exports.getPokemons = function (query) {
+          if (query === void 0) {
+            query = {};
+          }
+          return function (dispatch) {
+            return __awaiter(void 0, void 0, void 0, function () {
+              var response, err_2;
+              return __generator(this, function (_a) {
+                switch (_a.label) {
+                  case 0:
+                    dispatch({ type: PokemonsActionTypes.FETCH_TYPES });
+                    _a.label = 1;
+                  case 1:
+                    _a.trys.push([1, 3, , 4]);
+                    return [4 /*yield*/, request_1.default(request_2.ConfigEndpoints.getPokemons, query)];
+                  case 2:
+                    response = _a.sent();
+                    console.log('######### res', response);
+                    dispatch({
+                      type: PokemonsActionTypes.FETCH_POKEMONS_RESOLVE,
+                      payload: response,
+                    });
+                    return [3 /*break*/, 4];
+                  case 3:
+                    err_2 = _a.sent();
+                    dispatch({
+                      type: PokemonsActionTypes.FETCH_POKEMONS_REJECT,
+                      payload: err_2,
                     });
                     return [3 /*break*/, 4];
                   case 4:
