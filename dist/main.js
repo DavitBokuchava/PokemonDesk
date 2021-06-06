@@ -336,18 +336,22 @@
         var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()(
           _node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default.a,
         );
+        ___CSS_LOADER_EXPORT___.push([
+          module.i,
+          '@import url(https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap);',
+        ]);
         // Module
         ___CSS_LOADER_EXPORT___.push([
           module.i,
-          "/* eslint-disable */\n/* @import url('https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');\n\n* {\n    box-sizing: border-box;\n}\nhtml,\nbody {\n  margin: 0;\n  padding: 0;\n}\nbody {\n  font-family: 'Karla', sans-serif;\n} */\n/* eslint-enable */\n",
+          " * {\n    box-sizing: border-box;\n}\nhtml,\nbody {\n  margin: 0;\n  padding: 0;\n}\nbody {\n  font-family: 'Karla', sans-serif;\n} \n",
           '',
           {
             version: 3,
             sources: ['webpack://src/index.css'],
             names: [],
-            mappings: 'AAAA,mBAAmB;AACnB;;;;;;;;;;;;GAYG;AACH,kBAAkB',
+            mappings: 'CAEA;IACI,sBAAsB;AAC1B;AACA;;EAEE,SAAS;EACT,UAAU;AACZ;AACA;EACE,gCAAgC;AAClC',
             sourcesContent: [
-              "/* eslint-disable */\n/* @import url('https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');\n\n* {\n    box-sizing: border-box;\n}\nhtml,\nbody {\n  margin: 0;\n  padding: 0;\n}\nbody {\n  font-family: 'Karla', sans-serif;\n} */\n/* eslint-enable */\n",
+              " @import url('https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');\n\n* {\n    box-sizing: border-box;\n}\nhtml,\nbody {\n  margin: 0;\n  padding: 0;\n}\nbody {\n  font-family: 'Karla', sans-serif;\n} \n",
             ],
             sourceRoot: '',
           },
@@ -41711,9 +41715,6 @@ object-assign
       /***/ function (module, exports, __webpack_require__) {
         'use strict';
 
-        // import { applyMiddleware, compose, createStore } from 'redux';
-        // import thunk from 'redux-thunk';
-        // import createRootReducer from './store';
         var __spreadArrays =
           (this && this.__spreadArrays) ||
           function () {
@@ -41728,18 +41729,6 @@ object-assign
             return mod && mod.__esModule ? mod : { default: mod };
           };
         Object.defineProperty(exports, '__esModule', { value: true });
-        // const enhancers: [] = [];
-        // if (process.env.NODE_ENV === 'development') {
-        //   const devToolsExtension = (window && (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE) || compose;
-        //   if (typeof devToolsExtension == 'function') {
-        //     enhancers.push(devToolsExtension());
-        //   }
-        // }
-        // function configStore(preloadedState = {}) {
-        //   const store = createStore(createRootReducer(), preloadedState, compose(applyMiddleware(thunk), ...enhancers));
-        //   return store;
-        // }
-        // export default configStore;
         var redux_1 = __webpack_require__(/*! redux */ './node_modules/redux/es/redux.js');
         var redux_thunk_1 = __importDefault(
           __webpack_require__(/*! redux-thunk */ './node_modules/redux-thunk/es/index.js'),
@@ -41765,6 +41754,21 @@ object-assign
           return store;
         }
         exports.default = configureStore;
+        // import { applyMiddleware, compose, createStore } from 'redux';
+        // import thunk from 'redux-thunk';
+        // import createRootReducer from './store';
+        // const enhancers: [] = [];
+        // if (process.env.NODE_ENV === 'development') {
+        //   const devToolsExtension = (window && (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE) || compose;
+        //   if (typeof devToolsExtension == 'function') {
+        //     enhancers.push(devToolsExtension());
+        //   }
+        // }
+        // function configStore(preloadedState = {}) {
+        //   const store = createStore(createRootReducer(), preloadedState, compose(applyMiddleware(thunk), ...enhancers));
+        //   return store;
+        // }
+        // export default configStore;
 
         /***/
       },
@@ -42768,10 +42772,11 @@ object-assign
             return mod && mod.__esModule ? mod : { default: mod };
           };
         Object.defineProperty(exports, '__esModule', { value: true });
+        /* eslint-disable */
         var redux_1 = __webpack_require__(/*! redux */ './node_modules/redux/es/redux.js');
         var pokemons_1 = __importDefault(__webpack_require__(/*! ./pokemons */ './src/store/pokemons.ts'));
         var createRootReducer = function () {
-          redux_1.combineReducers({
+          return redux_1.combineReducers({
             pokemons: pokemons_1.default,
           });
         };

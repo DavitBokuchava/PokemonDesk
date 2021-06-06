@@ -1,20 +1,3 @@
-// import { applyMiddleware, compose, createStore } from 'redux';
-// import thunk from 'redux-thunk';
-// import createRootReducer from './store';
-
-// const enhancers: [] = [];
-
-// if (process.env.NODE_ENV === 'development') {
-//   const devToolsExtension = (window && (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE) || compose;
-//   if (typeof devToolsExtension == 'function') {
-//     enhancers.push(devToolsExtension());
-//   }
-// }
-// function configStore(preloadedState = {}) {
-//   const store = createStore(createRootReducer(), preloadedState, compose(applyMiddleware(thunk), ...enhancers));
-//   return store;
-// }
-// export default configStore;
 import { applyMiddleware, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import createRootReducer from './store';
@@ -36,3 +19,21 @@ function configureStore(preloadedState = {}) {
 }
 
 export default configureStore;
+
+// import { applyMiddleware, compose, createStore } from 'redux';
+// import thunk from 'redux-thunk';
+// import createRootReducer from './store';
+
+// const enhancers: [] = [];
+
+// if (process.env.NODE_ENV === 'development') {
+//   const devToolsExtension = (window && (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE) || compose;
+//   if (typeof devToolsExtension == 'function') {
+//     enhancers.push(devToolsExtension());
+//   }
+// }
+// function configStore(preloadedState = {}) {
+//   const store = createStore(createRootReducer(), preloadedState, compose(applyMiddleware(thunk), ...enhancers));
+//   return store;
+// }
+// export default configStore;

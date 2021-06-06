@@ -7,8 +7,9 @@ export interface IinitialState {
 }
 
 const createRootReducer = () => {
-  combineReducers({
+  return combineReducers({
     pokemons,
   });
 };
+
 export default createRootReducer;
